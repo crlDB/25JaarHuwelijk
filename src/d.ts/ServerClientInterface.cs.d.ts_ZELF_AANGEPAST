@@ -1,0 +1,548 @@
+declare module server {
+	const enum viewType {
+		unknown,
+		grid,
+		graph1,
+		graph2,
+		graph3,
+		graph4,
+	}
+	interface hotColPar {
+		colName: string;
+		colType: string;
+		colDataIndex: number;
+		colVisible: boolean;
+		colReadOnly: boolean;
+		colWidth: number;
+		colNumericFormat: string;
+		colNumericLang: string;
+		colRenderer: string;
+		colSource: string[];
+		colAllowEmpty: boolean;
+		colAllowInvalid: boolean;
+		colAutoCompleteStrict: boolean;
+		colAutoCompleteTrimDropdown: boolean;
+		colAutoCompleteVisibleRows: number;
+		colCheckboxTemplateOn: string;
+		colCheckboxTemplateOff: string;
+		colCheckboxLabel: string;
+		colCheckboxLabelPos: string;
+		colDateFormat: string;
+		colDateCorrectFormat: boolean;
+		colDefaultDate: string;
+		colDatePickFirstDate: number;
+		colDatePickShowWeekNbr: boolean;
+		colDatePickNbrMonth: number;
+	}
+	interface filterPanel {
+		filterCols: filterCol[];
+	}
+	interface filterCol {
+		colNaam: string;
+		filterActief: boolean;
+		filterType: string;
+		filterData: string;
+		colNr: number;
+	}
+	interface showHideColPanel {
+		visibleCols: showHideCol[];
+	}
+	interface showHideCol {
+		colNrSql: number;
+		colNaam: string;
+		visible: boolean;
+	}
+	interface generalPanel {
+		generalPars: generalPar[];
+	}
+	interface generalPar {
+		parName: string;
+		parValue: string;
+	}
+	interface toSrvLoad {
+		toSrvLoadGrid: {
+			toSrvAskedTableNum: number;
+			toSrvActiveTableNum: number;
+			toSrvAskedViewType: viewType;
+			toSrvActiveViewType: viewType;
+			toSrvPreSelection: string[];
+		};
+		toSrvSaveGrid: {
+			toSrvTableNum: number;
+			toSrvPreSelectie: string[];
+			toSrvTableData: toSrvSaveData[];
+		};
+		toSrvFilter: filterCol[];
+		toSrvShowHideCol: showHideCol[];
+		toSrvGeneralPar: generalPar[];
+		toSrvPage: {
+			toSrvPageCmd: number;
+			toSrvPageNr: number;
+		};
+		toSrvSort: {
+			toSrvColName: string;
+		};
+		toSrvLayoutCols: {
+			toSrvResetLayout: boolean;
+			toSrvLayoutCol: toSrvLayoutCol[];
+		};
+		toSrvLoadNodeTree: {
+			toSrvNodeKey: string;
+			toSrvLevel: number;
+			toSrvParentFolders: treeNode[];
+			toSrvFolderName: string;
+		};
+		toSrvDelete: {
+			toSrvRecId: number[];
+		};
+		toSrvLogInOff: {
+			toSrvLogNameOld: string;
+			toSrvLogNameNew: string;
+			toSrvPassWordNew: string;
+		};
+		toSrvUserInfo: {
+			toCliLogName: string;
+			toCliWebLevel: number;
+			toCliPlcLevel: number;
+		};
+		toSrvForceReloadTable: boolean;
+		/** data added after receiving from clientpublic IBeckhoffPlc beckhoffPlc { get; set; }public IConfigInMem configInMem { get; set; } */
+		dataInMem: {
+			tableCfgAllL_Active: {
+				tableCfgAllL: tableCfgAllList[];
+			};
+			tableCfgAllL_Asked: {
+				tableCfgAllL: tableCfgAllList[];
+			};
+			tableCfgUserL_Active: {
+				tableCfgUserL: tableCfgUserList[];
+			};
+			tableCfgUserL_Asked: {
+				tableCfgUserL: tableCfgUserList[];
+			};
+			tableFilterUserL_Asked: {
+				tableFilterUserL: tableFilterUserList[];
+			};
+			tableSortUserL_Asked: {
+				tableSortUserL: tableSortUserList[];
+			};
+			tablePageUserL_Asked: {
+				tablePageUserL: tablePageUserList[];
+			};
+			createTextList: boolean;
+			createConvertionNumberID: boolean;
+		};
+	}
+	interface hotCfg {
+		tableCfgAllD: { [index: number]: tableCfgAllList };
+		tableCfgUserD: { [index: number]: tableCfgUserDictionary };
+		tableFilterUserD: { [index: number]: tableFilterUserDictionary };
+		tableSortUserD: { [index: number]: tableSortUserDictionary };
+		tablePageUserD: { [index: number]: tablePageUserDictionary };
+	}
+	interface tableFilterUserDictionary {
+		tableFilterUserD: { [index: string]: tableFilterUserList };
+	}
+	interface tableFilterUserList {
+		tableFilterUserL: tableFilterUser[];
+	}
+	interface tableFilterUser {
+		colFilterAllow: boolean;
+		colFilterNumbSql: number;
+		colFilterActive: boolean;
+		colFilterType: string;
+		colFilterData: string;
+		changed: boolean;
+	}
+	interface tableSortUserDictionary {
+		tableSortUserD: { [index: string]: tableSortUserList };
+	}
+	interface tableSortUserList {
+		tableSortUserL: tableSortUser[];
+	}
+	interface tableSortUser {
+		colSortNumbSql: number;
+		colSortOrder: boolean;
+		changed: boolean;
+	}
+	interface tablePageUserDictionary {
+		tablePageUserD: { [index: string]: tablePageUserList };
+	}
+	interface tablePageUserList {
+		tablePageUserL: tablePageUser[];
+	}
+	interface tablePageUser {
+		currentPage: number;
+		maxRecPage: number;
+		changed: boolean;
+	}
+	interface tableCfgUserDictionary {
+		tableCfgUserD: { [index: string]: tableCfgUserList };
+	}
+	interface tableCfgUserList {
+		tableCfgUserL: tableCfgUser[];
+	}
+	interface tableCfgUser {
+		/** public int ColNumberHot { get; set; } */
+		colNumberSql: number;
+		colWidth: number;
+		colVisible: boolean;
+		changed: boolean;
+	}
+	interface tableCfgAllList {
+		tableCfgAllL: tableCfgAll[];
+	}
+	interface tableCfgAll {
+		colName: string;
+		colSqlNumber: number;
+		colReadOnly: boolean;
+		colType: string;
+		colRenderer: string;
+		colSource: string[];
+		colAllowInvalid: boolean;
+		colAllowEmpty: boolean;
+		colAutoCompleteStrict: boolean;
+		colAutoCompleteVisibleRows: number;
+		colAutoCompleteTrimDropdown: boolean;
+		colNumericFormat: string;
+		colNumericLang: string;
+		colCheckboxTemplateOn: string;
+		colCheckboxTemplateOff: string;
+		colCheckboxLabel: string;
+		colCheckboxLabelPos: string;
+		colDateFormat: string;
+		colDateCorrectFormat: boolean;
+		colDefaultDate: string;
+		colDatePickFirstDate: number;
+		colDatePickShowWeekNbr: boolean;
+		colDatePickNbrMonth: number;
+	}
+	interface dataInMem {
+		tableCfgAllL_Active: {
+			tableCfgAllL: tableCfgAllList[];
+		};
+		tableCfgAllL_Asked: {
+			tableCfgAllL: tableCfgAllList[];
+		};
+		tableCfgUserL_Active: {
+			tableCfgUserL: tableCfgUserList[];
+		};
+		tableCfgUserL_Asked: {
+			tableCfgUserL: tableCfgUserList[];
+		};
+		tableFilterUserL_Asked: {
+			tableFilterUserL: tableFilterUserList[];
+		};
+		tableSortUserL_Asked: {
+			tableSortUserL: tableSortUserList[];
+		};
+		tablePageUserL_Asked: {
+			tablePageUserL: tablePageUserList[];
+		};
+		createTextList: boolean;
+		createConvertionNumberID: boolean;
+	}
+	interface toCliLoad {
+		toClTableNum: number;
+		toClViewType: viewType;
+		toClTableColPar: hotColPar[];
+		toClTableData: string[][];
+		toClConfig: toSrvConfigColumns[];
+		toCliStatus: number;
+		toCliPreSelectie: string[];
+		toCliPage: {
+			toCliPageActive: number;
+			toCliLastPage: number;
+		};
+		toCliSort: {
+			orderStatus: number;
+			toCliSortedColNr: number;
+			toCliSortedOrder: boolean;
+		};
+		toCliInfoHearderGrid: string;
+		toCliLoadNodeTree: {
+			treeNodes: treeFolderWithChilderen[];
+			status: string;
+		};
+		toCliSaveGrid: {
+			toCliSave: {
+				toCliTableNum: number;
+			};
+		};
+		toCliDelete: {
+			deleteStatus: number;
+		};
+		toCliLogInOff: {
+			toCliUserInfo: {
+				toCliLogName: string;
+				toCliWebLevel: number;
+				toCliPlcLevel: number;
+			};
+		};
+		toCliGraph1: {
+			graph1: toCliGraph1[];
+		};
+		toCliGraph2: {
+			graph2: toCliGraph2[];
+		};
+		toCliGraph3: {
+			graph3: toCliGraph3[];
+		};
+	}
+	interface toSrvCopy {
+		toSrvCopyGrid: {
+			toSrvTableNum: number;
+			toSrvIndexToCpy: number[];
+		};
+		toSrvSaveGrid: {
+			toSrvTableNum: number;
+			toSrvPreSelectie: string[];
+			toSrvTableData: toSrvSaveData[];
+		};
+	}
+	interface toSrvCopyGrid {
+		toSrvTableNum: number;
+		toSrvIndexToCpy: number[];
+	}
+	interface toCliCopy {
+		toClTableNum: number;
+		toClTableColPar: hotColPar[];
+		toClTableData: string[][];
+		toClConfig: toSrvConfigColumns[];
+		toCliPreSelectie: string[];
+	}
+	interface toSrvUploadFromPlc {
+		recId: number;
+	}
+	interface toCliUploadFromPlc {
+		status: string;
+	}
+	interface toSrvLoadPanel {
+		toSrvTableNum: number;
+		toSrvUserInfo: {
+			toCliLogName: string;
+			toCliWebLevel: number;
+			toCliPlcLevel: number;
+		};
+	}
+	interface toSrvShowHideColData {
+		colNrSql: number;
+		colNaam: string;
+		visible: boolean;
+	}
+	interface toSrvLoadFilterPartial {
+		toSrvTableNum: number;
+	}
+	interface toSrvFilterData {
+		filterActief: boolean;
+		filterType: string;
+		filterData: string;
+		colNr: string;
+	}
+	interface toSrvPage {
+		toSrvPageCmd: number;
+		toSrvPageNr: number;
+	}
+	interface toCliPage {
+		toCliPageActive: number;
+		toCliLastPage: number;
+	}
+	interface toSrvSort {
+		toSrvColName: string;
+	}
+	interface toCliSort {
+		orderStatus: number;
+		toCliSortedColNr: number;
+		toCliSortedOrder: boolean;
+	}
+	interface toSrvLayoutCols {
+		toSrvResetLayout: boolean;
+		toSrvLayoutCol: toSrvLayoutCol[];
+	}
+	interface toSrvLayoutCol {
+		toSrvColWidth: number;
+		toSrvSqlColNmb: number;
+		toSrvSqlColName: string;
+	}
+	interface toSrvDelete {
+		toSrvRecId: number[];
+	}
+	interface toCliDelete {
+		deleteStatus: number;
+	}
+	interface toSrvRecId {
+		toSrvRcId: number[];
+	}
+	interface toCliGraph1 {
+		graph1: any[];
+	}
+	interface graph1 {
+		stationName: string;
+		alarmNumber: number;
+		alarmSymbol: string;
+		alarmText: string;
+		alarmCount: number;
+	}
+	interface toCliGraph2 {
+		graph2: any[];
+	}
+	interface graph2 {
+		stationName: string;
+		alarmNumber: number;
+		alarmSymbol: string;
+		alarmText: string;
+		alarmDurationSec: number;
+		alarmDurationText: string;
+	}
+	interface toCliGraph3 {
+		graph3: any[];
+	}
+	interface graph3 {
+		value1: number;
+		value2: number;
+		info1: string;
+		info2: string;
+	}
+	interface toSrvLoadGrid {
+		toSrvAskedTableNum: number;
+		toSrvActiveTableNum: number;
+		toSrvAskedViewType: viewType;
+		toSrvActiveViewType: viewType;
+		toSrvPreSelection: string[];
+	}
+	interface toSrvSaveGrid {
+		toSrvTableNum: number;
+		toSrvPreSelectie: string[];
+		toSrvTableData: toSrvSaveData[];
+	}
+	interface toSrvSaveData {
+		nr: number;
+		id: number[];
+		val: string;
+		rec: number;
+		colName: string;
+	}
+	interface toSrvConfigColumns {
+		colNr: number;
+		colName: string;
+		colSqlName: string;
+		colSqlType: string;
+	}
+	interface toSrvTreeAddFolder {
+		toSrvLevel: number;
+		toSrvParentFolders: treeNode[];
+		toSrvFolderName: string;
+	}
+	interface toCliTreeAddFolder {
+		toCliNewFolder: {
+			title: string;
+			key: string;
+			folder: boolean;
+		};
+	}
+	interface toCliTreeLoad {
+		treePlc: tree[];
+		foutCode: number;
+	}
+	interface tree {
+	}
+	interface treeNode extends tree {
+		title: string;
+		key: string;
+		folder: boolean;
+	}
+	interface treeFolderWithChilderen extends tree {
+		title: string;
+		key: string;
+		folder: boolean;
+		checkFolderData: boolean;
+		icon: string;
+		children: treeFolderWithChilderen[];
+	}
+	interface treeFolderChilderen extends tree {
+		title: string;
+		key: string;
+		folder: boolean;
+		children: treeChildNode[];
+	}
+	interface treeChildNode {
+		title: string;
+		key: string;
+	}
+	interface toSrvLoadNodeTree {
+		toSrvNodeKey: string;
+		toSrvLevel: number;
+		toSrvParentFolders: treeNode[];
+		toSrvFolderName: string;
+	}
+	interface toCliLoadNodeTree {
+		treeNodes: treeFolderWithChilderen[];
+		status: string;
+	}
+	interface toSrvDeleteEmptyRows {
+		tableNr: number;
+	}
+	interface toCliDeleteEmptyRows {
+		toClStatus: string;
+	}
+	interface toSrvCommand {
+		toSrvTableNum: number;
+		toSrvPreSelectie: string[];
+		toSrvCmd: number;
+		toSrvRecId: {
+			toSrvRcId: number[];
+		};
+	}
+	interface toCliCommand {
+		toCliReloadPlease: boolean;
+		toCliCmd: number;
+	}
+	interface toCliSaveGrid {
+		toCliSave: {
+			toCliTableNum: number;
+		};
+	}
+	interface toCliSave {
+		toCliTableNum: number;
+	}
+	interface toSrvLogInOff {
+		toSrvLogNameOld: string;
+		toSrvLogNameNew: string;
+		toSrvPassWordNew: string;
+	}
+	interface toCliLogInOff {
+		toCliUserInfo: {
+			toCliLogName: string;
+			toCliWebLevel: number;
+			toCliPlcLevel: number;
+		};
+	}
+	interface userInfo {
+		toCliLogName: string;
+		toCliWebLevel: number;
+		toCliPlcLevel: number;
+	}
+	interface toSrvLogInOffRT {
+		toSrvClientIpAddress: string;
+		toSrvClientNbr: number;
+		toSrvAction: number;
+		toSrvItemNbr: number;
+		toSrvLogName: string;
+		toSrvPassWord: string;
+		toSrvLogIn: boolean;
+	}
+	interface toCliLogInOffRT {
+		toCliLogName: string;
+		toCliWebLevel: number;
+		toCliPlcLevel: number;
+	}
+	interface toSrvFilterOrdes {
+		filterRust: boolean;
+		filterAnnul: boolean;
+		filterLabo: boolean;
+		filterStart: boolean;
+		filterWacht: boolean;
+		filterKlein: boolean;
+		filterGroot: boolean;
+	}
+}

@@ -1,0 +1,92 @@
+declare module server {
+	interface poFromWriteTags {
+		lti: server.PoFromWriteTag[];
+		cliIp: string;
+		cliNbr: number;
+		cliUsr: string;
+		cliAct: number;
+		cliItem: number;
+		cliAct2: string;
+	}
+	interface poFromWriteTag {
+		/** tag-id (object.tag) */
+		tid: string;
+		/** tagindex */
+		tn: string;
+		/** tag-waarde */
+		tw: string;
+		/** type =,W,S,R */
+		ty: string;
+	}
+	interface poAlarms {
+		poAlarmArr: server.PoAlarm[];
+	}
+	interface poAlarm {
+		alarmOn: boolean;
+		alarmText: string;
+	}
+	interface poV2Alarms {
+		poAlarmArr: server.PoV2Alarm[];
+		poAlarmClassArr: server.PoV2AlarmClass[];
+	}
+	interface poV2Alarm {
+		alarmDate: Date;
+		alarmOn: boolean;
+		alarmText: string;
+		classNbr: number;
+	}
+	interface poV2AlarmClass {
+		classText: string;
+	}
+	interface poMsgs {
+		poMsgArr: server.PoMsg[];
+	}
+	interface poMsg {
+		msgOn: boolean;
+		msgText: string;
+	}
+	interface poV2Msgs {
+		poMsgArr: server.PoV2Msg[];
+		poMsgClassArr: server.PoV2MsgClass[];
+	}
+	interface poV2Msg {
+		msgDate: Date;
+		msgOn: boolean;
+		msgText: string;
+		classNbr: number;
+	}
+	interface poV2MsgClass {
+		classText: string;
+	}
+	interface poWebObjs {
+		poWebObjArr: server.PoWebObj[];
+	}
+	interface poWebObj {
+		webObjSymbol: string;
+		webObjText: string;
+	}
+	interface poWebUsers {
+		poWebUserArr: server.PoWebUser[];
+	}
+	interface poWebUser {
+		userLogin: string;
+		plcLevel: number;
+		webLevel: number;
+	}
+	interface poClientInfo {
+		poClientIp: string;
+		poClientNbr: number;
+		poClientSymbol: string;
+		poServerIp: string;
+		poProject: server.Project;
+	}
+	interface poTankInfos {
+		poTankInfoArr: server.PoTankInfo[];
+	}
+	interface poTankInfo {
+		tankNbr: number;
+		hmiFull: string;
+		hmiShort1: string;
+		hmiShort2: string;
+	}
+}
