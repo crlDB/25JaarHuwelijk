@@ -2,6 +2,7 @@
 
 import "lib_jqueryposition";
 import "lib_jquerydraggable";
+import "@andxor/jquery-ui-touch-punch-fix";
 
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../../node_modules/font-awesome/css/font-awesome.css";

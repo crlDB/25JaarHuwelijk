@@ -29,6 +29,7 @@
     "jquery": "3.4.1",
     "jquery-ui": "1.12.1",
     "jquery-ui-themes": "1.12.0",
+    "@andxor/jquery-ui-touch-punch-fix": "1.0.2",
     "popper.js": "1.15.0"
   }
 }

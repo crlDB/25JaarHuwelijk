@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 require("lib_jqueryposition");
 require("lib_jquerydraggable");
+require("@andxor/jquery-ui-touch-punch-fix");
 require("../../node_modules/bootstrap/dist/css/bootstrap.css");
 require("../../node_modules/font-awesome/css/font-awesome.css");
 require("../css/app.css");
