@@ -19,12 +19,12 @@ interface IQuestion {
 
 export class Puzzel {
 
-//    let actief = {
-//    vrgNbr: 0,
+    //    let actief = {
+    //    vrgNbr: 0,
 
-//};
+    //};
 
-    
+
 
 
     private _$header: JQuery<HTMLElement>;
@@ -65,7 +65,7 @@ export class Puzzel {
 
         this._qArr.push({ question: '', answer: '' });
         this._qArr.push({ question: 'BOX01', answer: '01', $box: this._$header.find("#box1") });
-        this._qArr.push({ question: 'BOX02', answer: '02', $box: this._$header.find("#box2")});
+        this._qArr.push({ question: 'BOX02', answer: '02', $box: this._$header.find("#box2") });
         this._qArr.push({ question: 'BOX03', answer: '03', $box: this._$header.find("#box3") });
         this._qArr.push({ question: 'BOX04', answer: '04', $box: this._$header.find("#box4") });
         this._qArr.push({ question: 'BOX05', answer: '05', $box: this._$header.find("#box5") });
@@ -82,14 +82,15 @@ export class Puzzel {
 
         // create header
         this._$header = $(`<div class="alert alert-success" style="text-align:center; margin:0px;">
-                <h2>OP <span id="box1" class="badge badge-warning">21MAART</span> <span id="box2" class="badge badge-warning">2020</span> VIEREN WIJ</br>
-                ONS <span id="box3" class="badge badge-warning">25JAAR</span> <span id="box4" class="badge badge-warning">HUWELIJK</span>, </br>
-                <span id="box5" class="badge badge-warning">BOX5</span></br>
-                <span id="box6" class="badge badge-warning">BOX6</span></br>
-                <span id="box7" class="badge badge-warning">BOX7</span></br>
-                <span id="box8" class="badge badge-warning">BOX8</span></br>
-                <span id="box9" class="badge badge-warning">BOX9</span></br>
-                <span id="box10" class="badge badge-warning">BOX10</span></br>
+                <h2>Op <span id="box10" class="badge badge-warning">17 maart</span> 2020 zijn wij <span id="box10" class="badge badge-warning">25 jaar</span> getrouwd!</br>
+                Omdat we nog steeds heel erg <span id="box10" class="badge badge-warning">gelukkig zijn</span> met elkaar,</br>
+                zouden we dit graag samen met onze familie vieren.</br>
+                Hiervoor willen wij jullie dan ook <span id="box10" class="badge badge-warning">uitnodigen</span> op een</br> 
+                <span id="box10" class="badge badge-warning">‘Dinner and Dance’</span> in het restaurant </br>
+                waar we onze  <span id="box10" class="badge badge-warning">samenwoonst</span> gevierd hebben in <span id="box10" class="badge badge-warning">1993</span>.</br>
+                Wanneer: <span id="box10" class="badge badge-warning">zaterdag 21 maart</span> om 19u30</br>
+                Waar: <span id="box10" class="badge badge-warning">Ter Torre</span>, Broekstraat 109 te Waregem</br>
+                Graag een seintje voor <span id="box10" class="badge badge-warning">1 maart</span> 2020 of je/jullie  al dan niet aanwezig zal/zullen zijn
                 </h2>
                 </div>`);
         $('body').append(this._$header);
@@ -131,7 +132,7 @@ export class Puzzel {
 
             this.checkAnswer();
 
-            this._setting.questionPrev = this._setting.questionActive; 
+            this._setting.questionPrev = this._setting.questionActive;
             this._setting.questionActive--;
             if (this._setting.questionActive < this._setting.firstQuestion)
                 this._setting.questionActive = this._setting.firstQuestion;
@@ -144,7 +145,7 @@ export class Puzzel {
 
             this.checkAnswer();
 
-            this._setting.questionPrev = this._setting.questionActive; 
+            this._setting.questionPrev = this._setting.questionActive;
             this._setting.questionActive++;
             if (this._setting.questionActive > this._setting.lastQuestion)
                 this._setting.questionActive = this._setting.lastQuestion;

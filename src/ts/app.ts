@@ -85,10 +85,8 @@ for (var i = 1; i <= 4; i++) {
 let w = 800.0;
 let h = 533.0;
 let wOffset = w / 4.0; 
-alert('wOffset > ' + wOffset)
 
 let hOffset = h / 4.0; //hOffset += 0.5;
-alert('hOffset > ' + hOffset)
 
 let x = 400;
 let y = 600;

@@ -34,9 +34,7 @@ for (var i = 1; i <= 4; i++) {
 var w = 800.0;
 var h = 533.0;
 var wOffset = w / 4.0;
-alert('wOffset > ' + wOffset);
 var hOffset = h / 4.0; //hOffset += 0.5;
-alert('hOffset > ' + hOffset);
 var x = 400;
 var y = 600;
 var xPos, yPos;
