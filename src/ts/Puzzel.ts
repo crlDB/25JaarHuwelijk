@@ -82,7 +82,7 @@ export class Puzzel {
 
         // create header
         this._$header = $(`<div class="alert alert-success" style="text-align:center; margin:0px;">
-                <h2>Op <span id="box10" class="badge badge-warning">17 maart</span> 2020 zijn wij <span id="box10" class="badge badge-warning">25 jaar</span> getrouwd!</br>
+                <h2>Op <span id="box10" class="badge badge-warning">17 maart</span> 2020 zijn wij <span id="box10" class="badge badge-warning">25 jaar getrouwd</span>!</br>
                 Omdat we nog steeds heel erg <span id="box10" class="badge badge-warning">gelukkig zijn</span> met elkaar,</br>
                 zouden we dit graag samen met onze familie vieren.</br>
                 Hiervoor willen wij jullie dan ook <span id="box10" class="badge badge-warning">uitnodigen</span> op een</br> 
@@ -90,7 +90,7 @@ export class Puzzel {
                 waar we onze  <span id="box10" class="badge badge-warning">samenwoonst</span> gevierd hebben in <span id="box10" class="badge badge-warning">1993</span>.</br>
                 Wanneer: <span id="box10" class="badge badge-warning">zaterdag 21 maart</span> om 19u30</br>
                 Waar: <span id="box10" class="badge badge-warning">Ter Torre</span>, Broekstraat 109 te Waregem</br>
-                Graag een seintje voor <span id="box10" class="badge badge-warning">1 maart</span> 2020 of je/jullie  al dan niet aanwezig zal/zullen zijn
+                Graag een seintje voor <span id="box10" class="badge badge-warning">1 maart</span> 2020.
                 </h2>
                 </div>`);
         $('body').append(this._$header);
