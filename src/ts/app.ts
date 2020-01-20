@@ -3,6 +3,7 @@
 import "lib_jqueryposition";
 import "lib_jquerydraggable";
 import "@andxor/jquery-ui-touch-punch-fix";
+import "bootstrap";
 
 import "../../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../../node_modules/font-awesome/css/font-awesome.css";
@@ -11,91 +12,39 @@ import "../css/app.css";
 
 
 import * as d3 from "d3";
+import { Puzzel } from "./Puzzel";
 
 
-// create tekst ----------------------------------------------------------------->
-let header = $(`<div class="alert alert-success" style="text-align:center; margin:0px;">
-                <h1>OP <span class="badge badge-warning">21MAART</span> <span class="badge badge-warning">2020</span> VIEREN WIJ</br>
-                ONS <span class="badge badge-warning">25JAAR</span> <span class="badge badge-warning">HUWELIJK</span>, </br>
-                DIT
-                </h1>
-                </div>`);
-$('body').append(header);
-
-// hr --------------------------------------------------------------------------->
-//$('body').append('<hr>');
-let vrg = $('<div class="alert alert-primary" role="alert" style="text-align:center; margin:0px;"></div>');
-$('body').append(vrg);
-
-// hr --------------------------------------------------------------------------->
-//$('body').append('<hr>');
-
-// prev - next ------------------------------------------------------------------>
-let answer = $(`
-<form class="form-inline center alert alert-primary" style="text-align:center; margin:0px;">
-  <button id="btnVorige" type="button" class="btn btn-primary mb-2">VORIGE</button>
-
-  <div class="form-group mx-sm-3 mb-2">
-    <label for="inputPassword2" class="sr-only">ANTWOORD</label>
-    <input type="text" class="form-control" id="inputPassword2" placeholder="antwoord">
-  </div>
-
-  <button id="btnVolgende" type="button" class="btn btn-primary mb-2">VOLGENDE</button>
-</form>`).css('text-align', 'center');
-$('body').append(answer);
+export interface GlobalRT {
+    RT: Puzzel
+}
 
 
-// hr ---------------------------------------------------------------------------->
-$('body').append('<hr>');
-
-
-let actief = {
-    vrgNbr: 0,
-
+// create global var
+let runtime: GlobalRT = {
+    RT: null
 };
 
+window['WebHmiRT'] = runtime;               // before new PoRuntime !!!!
+
+runtime.RT = new Puzzel();
 
 
 
-let qArr = [];
-let q = { vrg: 'DAG VAN HET FEEST', antw: '17maart'}; qArr.push(q);
-q = { vrg: 'JAAR VAN HET FEEST', antw: '2020' }; qArr.push(q);
-q = { vrg: 'h qsdjkfhhjklqshfjkqsh', antw: '2020' }; qArr.push(q);
-q = { vrg: 'lj dfqsdlfqsdlflkqsjklfq', antw: '2020' }; qArr.push(q);
-q = { vrg: 'kdfj sdjhfqsdhjkfhqsdklfhklqsfjkqs', antw: '2020' }; qArr.push(q);
-q = { vrg: 'hfsd sdklfh kqsdjfjkqslhfjkl', antw: '2020' }; qArr.push(q);
 
 
 
-// btn vorige
-$('#btnVorige').click((e) => {
-    actief.vrgNbr--;
-    if (actief.vrgNbr < 0)
-        actief.vrgNbr = 0;
 
-    vrg.empty();
-    vrg.append(`<h5>
-                Vraag ${actief.vrgNbr+1} </br>
-                ${qArr[actief.vrgNbr].vrg}</h5> </br>
-                (maak puzzel, antwoord staat onderaan)
-                `);
-})
 
-// btn volgende
-$('#btnVolgende').click((e) => {
-    actief.vrgNbr++;
-    if (actief.vrgNbr > 10)
-        actief.vrgNbr = 10;
 
-    vrg.empty();
-    vrg.empty();
-    vrg.append(`<h5>
-                Vraag ${actief.vrgNbr + 1} </br>
-                ${qArr[actief.vrgNbr].vrg}</h5> </br>
-                (maak puzzel, antwoord staat onderaan)
-                `);
 
-})
+// hr --------------------------------------------------------------------------->
+//$('body').append('<hr>');
+
+
+
+
+
 
 
 
@@ -116,26 +65,106 @@ $('#btnVolgende').click((e) => {
 
 ;
 
-for (var i = 1; i < 10; i++) {
+let $var = [];
+let ii = 0;
+for (var i = 1; i <= 4; i++) {
+    for (var j = 1; j <= 4; j++) {
+        let name: string = '10_' + i + '_' + j;
+        $var[ii] = $('<img>', {
+            id: name,
+            src: './src/img/foto10/' + name + '.png'
+        });
+        $var[ii].draggable();
 
-
-    let y: JQuery<HTMLElement> = $('<img>', {
-        id: '100_' + i,
-        src: './src/img/foto100/p' + i + '.png'
-    });
-    (<any>y).draggable();
-
-    $('body').append(y);
-
+        $('body').append($var[ii]);
+        ii++;
+    }
 }
 
 
+let w = 800.0;
+let h = 533.0;
+let wOffset = w / 4.0; 
+alert('wOffset > ' + wOffset)
+
+let hOffset = h / 4.0; //hOffset += 0.5;
+alert('hOffset > ' + hOffset)
+
+let x = 400;
+let y = 600;
+let xPos, yPos;
+let xPos1, yPos1;
+
+for (var i = 0; i < 16; i++) {
+
+    let xRandom = Math.random() * 1000;
+    let yRandom = Math.random() * 1000;
+    
+    $var[i].css({
+        position: 'absolute',
+        left: xRandom + 'px',
+        top: yRandom + 'px'
+    });
+
+    switch (i) {
+
+        case 0:
+            xPos = x;
+            yPos = y - 1;
+            break;
+        case 4:
+            xPos = x;
+            yPos = y + (hOffset * 1);
+            break;
+        case 8:
+            xPos = x;
+            yPos = y + (hOffset * 2);
+            break;
+
+        case 12:
+            xPos = x;
+            yPos = y + (hOffset * 3);
+            break;
+
+        default:
+            xPos += wOffset;
+            break;
+    }
+
+    xPos1 = xPos;
+    yPos1 = yPos;
+
+    switch (i) {
+
+        case 5:
+        case 10:
+        case 13:
+        case 14:
+        case 15:
+            xPos1 = xPos - 49;
+            break;
+        case 6:
+            xPos1 = xPos - 49;
+            yPos1 = yPos - 32;
+            break;
+        case 7:
+            yPos1 = yPos - 32;
+            break;
 
 
 
-//alert('carlk');
-
-//let webHmiConfig = new WebHmiConfig();
+    }
 
 
-// laden 
+    $var[i]
+        .animate({
+            left: xPos1 + 'px',
+            top: yPos1 + 'px'
+        }, 1000);
+};
+
+
+
+
+
+
