@@ -7,7 +7,7 @@ var Puzzel = /** @class */ (function () {
     //
     function Puzzel() {
         this._$puzzel = [];
-        this._setting = { questionActive: 5, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
+        this._setting = { questionActive: 4, questionPrev: 4, firstQuestion: 1, lastQuestion: 10 };
         this._qArr = [];
         // headertext
         this.createHeaderText();
@@ -29,29 +29,51 @@ var Puzzel = /** @class */ (function () {
         this._qArr.push({});
         this._qArr.push({});
         this._qArr.push({});
-        this._qArr.push({});
         this._qArr.push({
-            photoNbr: 5,
-            question: 'BOX05',
-            answer: 'dinner & dance',
-            $box: this._$header.find("#box5"),
+            photoNbr: 4,
+            type: 3,
+            question: 'BOX04',
+            answer: 'uitnodigen',
+            $box: this._$header.find("#box4"),
             pW: 800,
             pH: 600,
-            ppX: 49,
-            ppY: 36,
-            pX: [[0, 0, 0, 0],
+            ppX: 64,
+            ppY: 49,
+            pX: [[0, -1, -1, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
             ],
             pY: [[0, 0, 0, 0],
+                [0, -1, -1, 0],
+                [0, 0, -1, 0],
+                [0, 0, 0, 0],
+            ]
+        });
+        this._qArr.push({
+            photoNbr: 5,
+            type: 3,
+            question: 'BOX05',
+            answer: 'dinner & dance',
+            $box: this._$header.find("#box5"),
+            pW: 800,
+            pH: 600,
+            ppX: 64,
+            ppY: 49,
+            pX: [[0, -1, 0, 0],
+                [0, -1, 0, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
+            ],
+            pY: [[0, 0, 0, 0],
+                [0, 0, -1, 0],
+                [-1, -1, 0, 0],
                 [0, 0, 0, 0],
             ]
         });
         this._qArr.push({
             photoNbr: 6,
+            type: 4,
             question: 'BOX06',
             answer: 'samenwoonst',
             $box: this._$header.find("#box6"),
@@ -72,6 +94,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 7,
+            type: 4,
             question: 'BOX07',
             answer: '1993',
             $box: this._$header.find("#box7"),
@@ -92,6 +115,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 8,
+            type: 4,
             question: 'BOX08',
             answer: 'zaterdag 21 maart',
             $box: this._$header.find("#box8"),
@@ -132,6 +156,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 10,
+            type: 4,
             question: 'BOX10',
             answer: '1 maart',
             $box: this._$header.find("#box10"),
@@ -255,29 +280,33 @@ var Puzzel = /** @class */ (function () {
     };
     Puzzel.prototype.ShowPhoto = function () {
         var photoNbr = this._qArr[this._setting.questionActive].photoNbr;
+        var typ = this._qArr[this._setting.questionActive].type;
+        $('img').remove();
         var ii = 0;
-        for (var i = 1; i <= 4; i++) {
-            for (var j = 1; j <= 4; j++) {
+        for (var i = 1; i <= typ; i++) {
+            for (var j = 1; j <= typ; j++) {
                 var name_1 = photoNbr + '_' + i + '_' + j;
                 var folder = './src/img/foto' + photoNbr + '/' + name_1 + '.png';
-                if (this._$puzzel[ii] == null) {
-                    this._$puzzel[ii] = $('<img>', {
-                        id: name_1,
-                        src: folder
-                    });
-                    this._$puzzel[ii].draggable();
-                    $('body').append(this._$puzzel[ii]);
-                }
-                else {
-                    this._$puzzel[ii].attr('src', folder);
-                }
+                //if (this._$puzzel[ii] == null) {
+                this._$puzzel[ii] = $('<img>', {
+                    id: name_1,
+                    src: folder
+                });
+                this._$puzzel[ii].draggable();
+                $('body').append(this._$puzzel[ii]);
+                //} else {
+                //    this._$puzzel[ii].attr('src', folder);
+                //}
                 ii++;
             }
         }
     };
     Puzzel.prototype.ShufflePhoto = function () {
-        for (var i = 0; i < 16; i++) {
+        var count = this._qArr[this._setting.questionActive].type * this._qArr[this._setting.questionActive].type;
+        for (var i = 0; i < count; i++) {
             var xRandom = (Math.random() * $(document).width()) - 300;
+            if (xRandom < 0)
+                xRandom = 0;
             var yRandom = Math.random() * 1000 + this._$puzzleSpace.position().top;
             this._$puzzel[i].css({
                 position: 'absolute',
@@ -288,48 +317,46 @@ var Puzzel = /** @class */ (function () {
     };
     Puzzel.prototype.fixPuzzel = function () {
         this._$input.val(this._qArr[this._setting.questionActive].answer);
+        var typ = this._qArr[this._setting.questionActive].type;
         var w = this._qArr[this._setting.questionActive].pW;
         var h = this._qArr[this._setting.questionActive].pH;
-        var wOffset = Math.floor(w / 4.0) + 1;
-        var hOffset = Math.floor(h / 4.0) + 1; //hOffset += 0.5;
+        var wOffset = Math.floor(w / this._qArr[this._setting.questionActive].type) + 1;
+        var hOffset = Math.floor(h / this._qArr[this._setting.questionActive].type) + 1; //hOffset += 0.5;
         var x = ($(document).width() / 2) - (w / 2);
-        var y = this._$puzzleSpace.position().top + 50;
+        var y = this._$puzzleSpace.position().top + 20;
         var xPos, yPos;
         var xPos1, yPos1;
-        for (var i = 0; i < 16; i++) {
-            switch (i) {
-                case 0:
-                    xPos = x;
-                    yPos = y;
-                    break;
-                case 4:
-                    xPos = x;
-                    yPos = y + (hOffset * 1);
-                    break;
-                case 8:
-                    xPos = x;
-                    yPos = y + (hOffset * 2);
-                    break;
-                case 12:
-                    xPos = x;
-                    yPos = y + (hOffset * 3);
-                    break;
-                default:
-                    xPos += wOffset;
-                    break;
+        var count = typ * typ;
+        var row = 0;
+        var col = 0;
+        for (var i = 0; i < count; i++) {
+            // row
+            row = Math.floor(i / typ);
+            // col
+            col = (i % typ);
+            // start
+            if (i == 0) {
+                xPos = x;
+                yPos = y;
+            }
+            // new line
+            if ((i % typ) == 0) {
+                xPos = x;
+                yPos = y + (hOffset * row);
+            }
+            else {
+                xPos += wOffset;
             }
             xPos1 = xPos;
             yPos1 = yPos;
-            var rij = Math.floor(i / 4);
-            var col = i % 4;
             //alert(rij + '/ ' + col);
-            if (this._qArr[this._setting.questionActive].pX[rij][col] > 0)
+            if (this._qArr[this._setting.questionActive].pX[row][col] > 0)
                 xPos1 = xPos + this._qArr[this._setting.questionActive].ppX;
-            if (this._qArr[this._setting.questionActive].pX[rij][col] < 0)
+            if (this._qArr[this._setting.questionActive].pX[row][col] < 0)
                 xPos1 = xPos - this._qArr[this._setting.questionActive].ppX;
-            if (this._qArr[this._setting.questionActive].pY[rij][col] > 0)
+            if (this._qArr[this._setting.questionActive].pY[row][col] > 0)
                 yPos1 = yPos + this._qArr[this._setting.questionActive].ppY;
-            if (this._qArr[this._setting.questionActive].pY[rij][col] < 0)
+            if (this._qArr[this._setting.questionActive].pY[row][col] < 0)
                 yPos1 = yPos - this._qArr[this._setting.questionActive].ppY;
             this._$puzzel[i]
                 .animate({

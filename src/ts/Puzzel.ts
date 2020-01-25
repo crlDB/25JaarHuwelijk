@@ -14,6 +14,7 @@ interface IQuestion {
     answer?: string;
     $box?: JQuery<HTMLElement>;
     photoNbr?: number;
+    type?: number;
     pW?: number;
     pH?: number;
     ppX?: number;
@@ -40,7 +41,7 @@ export class Puzzel {
     private _$input: JQuery<HTMLElement>;
     private _$puzzel: JQuery<HTMLElement>[] = [];
 
-    private _setting: ISetting = { questionActive: 5, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
+    private _setting: ISetting = { questionActive: 4, questionPrev: 4, firstQuestion: 1, lastQuestion: 10 };
     private _qArr: IQuestion[] = [];
     db: DBox;
     _$puzzleSpace: JQuery<HTMLElement>;
@@ -86,30 +87,51 @@ export class Puzzel {
 
         });
         this._qArr.push({
-        });
-        this._qArr.push({
-            photoNbr: 5,
-            question: 'BOX05',
-            answer: 'dinner & dance',
-            $box: this._$header.find("#box5"),
+            photoNbr: 4,
+            type: 3,
+            question: 'BOX04',
+            answer: 'uitnodigen',
+            $box: this._$header.find("#box4"),
             pW: 800,
             pH: 600,
-            ppX: 49,
-            ppY: 36,
-            pX: [[0, 0, 0, 0],
+            ppX: 64,
+            ppY: 49,
+            pX: [[0, -1, -1, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
             ],
             pY: [[0, 0, 0, 0],
+            [0, -1, -1, 0],
+            [0, 0, -1, 0],
+            [0, 0, 0, 0],
+            ]
+        });
+        this._qArr.push({
+            photoNbr: 5,
+            type: 3,
+            question: 'BOX05',
+            answer: 'dinner & dance',
+            $box: this._$header.find("#box5"),
+            pW: 800,
+            pH: 600,
+            ppX: 64,
+            ppY: 49,
+            pX: [[0, -1, 0, 0],
+            [0, -1, 0, 0],
             [0, 0, 0, 0],
             [0, 0, 0, 0],
+            ],
+            pY: [[0, 0, 0, 0],
+            [0, 0, -1, 0],
+            [-1, -1, 0, 0],
             [0, 0, 0, 0],
             ]
 
         });
         this._qArr.push({
             photoNbr: 6,
+            type: 4,
             question: 'BOX06',
             answer: 'samenwoonst',
             $box: this._$header.find("#box6"),
@@ -130,6 +152,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 7,
+            type: 4,
             question: 'BOX07',
             answer: '1993',
             $box: this._$header.find("#box7"),
@@ -151,6 +174,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 8,
+            type: 4,
             question: 'BOX08',
             answer: 'zaterdag 21 maart',
             $box: this._$header.find("#box8"),
@@ -191,6 +215,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 10,
+            type: 4,
             question: 'BOX10',
             answer: '1 maart',
             $box: this._$header.find("#box10"),
@@ -400,13 +425,16 @@ export class Puzzel {
     private ShowPhoto() {
 
         let photoNbr: number = this._qArr[this._setting.questionActive].photoNbr;
+        let typ: number = this._qArr[this._setting.questionActive].type;
+
+        $('img').remove();
 
         let ii = 0;
-        for (var i = 1; i <= 4; i++) {
-            for (var j = 1; j <= 4; j++) {
+        for (var i = 1; i <= typ; i++) {
+            for (var j = 1; j <= typ; j++) {
                 let name: string = photoNbr + '_' + i + '_' + j;
                 let folder: string = './src/img/foto' + photoNbr + '/' + name + '.png';
-                if (this._$puzzel[ii] == null) {
+                //if (this._$puzzel[ii] == null) {
 
                     this._$puzzel[ii] = $('<img>', {
                         id: name,
@@ -415,9 +443,9 @@ export class Puzzel {
                     this._$puzzel[ii].draggable();
 
                     $('body').append(this._$puzzel[ii]);
-                } else {
-                    this._$puzzel[ii].attr('src', folder);
-                }
+                //} else {
+                //    this._$puzzel[ii].attr('src', folder);
+                //}
 
                 ii++;
 
@@ -427,9 +455,13 @@ export class Puzzel {
 
     private ShufflePhoto() {
 
-        for (var i = 0; i < 16; i++) {
+        let count = this._qArr[this._setting.questionActive].type * this._qArr[this._setting.questionActive].type;
+        for (var i = 0; i < count; i++) {
 
             let xRandom = (Math.random() * $(document).width()) - 300;
+            if (xRandom < 0)
+                xRandom = 0;
+
             let yRandom = Math.random() * 1000 + this._$puzzleSpace.position().top;
 
             this._$puzzel[i].css({
@@ -443,58 +475,52 @@ export class Puzzel {
     private fixPuzzel() {
         this._$input.val(this._qArr[this._setting.questionActive].answer);
 
+        let typ: number = this._qArr[this._setting.questionActive].type;
         let w = this._qArr[this._setting.questionActive].pW;
         let h = this._qArr[this._setting.questionActive].pH;
-        let wOffset = Math.floor(w / 4.0) + 1;
-        let hOffset = Math.floor(h / 4.0) + 1; //hOffset += 0.5;
+        let wOffset = Math.floor(w / this._qArr[this._setting.questionActive].type) + 1;
+        let hOffset = Math.floor(h / this._qArr[this._setting.questionActive].type) + 1; //hOffset += 0.5;
         let x = ($(document).width() / 2) - (w / 2);
-        let y = this._$puzzleSpace.position().top + 50;
+        let y = this._$puzzleSpace.position().top + 20;
         let xPos, yPos;
         let xPos1, yPos1;
 
+        let count = typ * typ;
+        let row: number = 0;
+        let col: number = 0;
+        for (var i = 0; i < count; i++) {
 
-        for (var i = 0; i < 16; i++) {
+            // row
+            row = Math.floor(i / typ);
+            // col
+            col = (i % typ);
 
+            // start
+            if (i == 0) {
+                xPos = x;
+                yPos = y;
+            }
 
-            switch (i) {
-
-                case 0:
-                    xPos = x;
-                    yPos = y;
-                    break;
-                case 4:
-                    xPos = x;
-                    yPos = y + (hOffset * 1);
-                    break;
-                case 8:
-                    xPos = x;
-                    yPos = y + (hOffset * 2);
-                    break;
-
-                case 12:
-                    xPos = x;
-                    yPos = y + (hOffset * 3);
-                    break;
-
-                default:
-                    xPos += wOffset;
-                    break;
+            // new line
+            if ((i % typ) == 0) {
+                xPos = x;
+                yPos = y + (hOffset * row);
+            } else {
+                xPos += wOffset;
             }
 
             xPos1 = xPos;
             yPos1 = yPos;
 
-            let rij = Math.floor(i / 4);
-            let col = i % 4;
             //alert(rij + '/ ' + col);
-            if (this._qArr[this._setting.questionActive].pX[rij][col] > 0)
+            if (this._qArr[this._setting.questionActive].pX[row][col] > 0)
                 xPos1 = xPos + this._qArr[this._setting.questionActive].ppX;
-            if (this._qArr[this._setting.questionActive].pX[rij][col] < 0)
+            if (this._qArr[this._setting.questionActive].pX[row][col] < 0)
                 xPos1 = xPos - this._qArr[this._setting.questionActive].ppX;
 
-            if (this._qArr[this._setting.questionActive].pY[rij][col] > 0)
+            if (this._qArr[this._setting.questionActive].pY[row][col] > 0)
                 yPos1 = yPos + this._qArr[this._setting.questionActive].ppY;
-            if (this._qArr[this._setting.questionActive].pY[rij][col] < 0)
+            if (this._qArr[this._setting.questionActive].pY[row][col] < 0)
                 yPos1 = yPos - this._qArr[this._setting.questionActive].ppY;
 
 
