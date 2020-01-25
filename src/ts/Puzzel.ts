@@ -195,23 +195,23 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 6,
-            typeR: 4,
-            typeC: 4,
+            typeR: 3,
+            typeC: 2,
             question: 'BOX06',
             answer: 'samenwoonst',
             $box: this._$header.find("#box6"),
             pW: 600,
             pH: 906,
             ppX: 36,
-            ppY: 55,
+            ppY: 75,
             pX: [[0, 0, 0, 0],
-            [0, 0, -1, -1],
-            [0, -1, 0, -1],
-            [0, -1, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
             ],
             pY: [[0, 0, 0, 0],
             [0, 0, 0, 0],
-            [-1, 0, -1, -1],
+            [-1, 0, 0, 0],
             [0, 0, 0, 0],
             ]
         });
@@ -311,26 +311,51 @@ export class Puzzel {
     private createHeaderText() {
 
         // create header
-        this._$header = $(`<div class="alert" style="text-align:center; margin:0px;">
-                <h3>Op <span id="box1" class="badge badge-warning">17 maart</span> 2020 zijn wij <span id="box2" class="badge badge-warning">25 jaar getrouwd</span>!</br>
-                Omdat we nog steeds heel erg <span id="box3" class="badge badge-warning">gelukkig zijn</span> met elkaar,</br>
-                zouden we dit graag samen met onze familie vieren.</br>
-                Hiervoor willen wij jullie dan ook <span id="box4" class="badge badge-warning">uitnodigen</span> op een</br> 
-                <span id="box5" class="badge badge-warning">‘Dinner and Dance’</span> in het restaurant </br>
-                waar we onze  <span id="box6" class="badge badge-warning">samenwoonst</span> gevierd hebben in <span id="box7" class="badge badge-warning">1993</span>.</br>
-                Wanneer: <span id="box8" class="badge badge-warning">zaterdag 21 maart</span> om 19u30</br>
-                Waar: <span id="box9" class="badge badge-warning">Ter Torre</span>, Broekstraat 109 te Waregem</br>
+        this._$header
+          = $(`
+               
+
+
+                <div class="container">
+                <div class="row" style="text-align:center; margin-top:35px;">
+
+                
+              
+                <div class="col-12">
+                <h3>Op <span id="box1" class="badge badge-warning">17 maart</span> 2020 zijn wij <span id="box2" class="badge badge-warning">25 jaar getrouwd</span>!
+                Omdat we nog steeds heel erg <span id="box3" class="badge badge-warning">gelukkig zijn</span> met elkaar,
+                zouden we dit graag samen met onze familie vieren.
+                Hiervoor willen wij jullie dan ook <span id="box4" class="badge badge-warning">uitnodigen</span> op een 
+                <span id="box5" class="badge badge-warning">‘Dinner and Dance’</span> in het restaurant 
+                waar we onze  <span id="box6" class="badge badge-warning">samenwoonst</span> gevierd hebben in <span id="box7" class="badge badge-warning">1993</span>.
+                Wanneer: <span id="box8" class="badge badge-warning">zaterdag 21 maart</span> om 19u30
+                Waar: <span id="box9" class="badge badge-warning">Ter Torre</span>, Broekstraat 109 te Waregem
                 Graag een seintje voor <span id="box10" class="badge badge-warning">1 maart</span> 2020.
                 </h3>
+                </div>
+
+               
+
+
+                </div>
                 </div>`);
+
+
+            //$('<img src="./src/img/faces/jenna2.png" class="img-fluid" style="">'));
         $('body').append(this._$header);
+        //$('body').append(
+        //    $('<img>', {
+        //        id: 'dsd',
+        //        src: './src/img/faces/jenna2.png'
+        //    }));
+
     }
 
     private createQestion() {
 
         this._$div1 = $('<div class= "alert" style = "text-align:center; margin:0px;" > </div>')
         this._$answer = $('<div style="text-align:center; margin:0px;"></div>');
-        this._$div1.append(this._$answer);
+        //this._$div1.append(this._$answer);
         //$('body').append(this._$answer);
     }
 
@@ -355,7 +380,7 @@ export class Puzzel {
 
 
         // hr 
-        $('body').append('<hr>');
+        //$('body').append('<hr>');
 
     }
 
@@ -498,7 +523,11 @@ export class Puzzel {
         let tRow: number = this._qArr[this._setting.questionActive].typeR;
         let tCol: number = this._qArr[this._setting.questionActive].typeC;
 
-        $('img').remove();
+        //$('img').remove();
+        for (var g = 0; g < 20; g++) {
+            if (this._$puzzel[g])
+                this._$puzzel[g].remove();
+        }
 
         let ii = 0;
         for (var i = 1; i <= tRow; i++) {
@@ -554,7 +583,7 @@ export class Puzzel {
         let wOffset = Math.floor(w / tCol) + 1;
         let hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
         let x = ($(document).width() / 2) - (w / 2);
-        let y = this._$puzzleSpace.position().top + 20;
+        let y = this._$puzzleSpace.position().top;
         let xPos, yPos;
         let xPos1, yPos1;
 

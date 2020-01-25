@@ -138,23 +138,23 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 6,
-            typeR: 4,
-            typeC: 4,
+            typeR: 3,
+            typeC: 2,
             question: 'BOX06',
             answer: 'samenwoonst',
             $box: this._$header.find("#box6"),
             pW: 600,
             pH: 906,
             ppX: 36,
-            ppY: 55,
+            ppY: 75,
             pX: [[0, 0, 0, 0],
-                [0, 0, -1, -1],
-                [0, -1, 0, -1],
-                [0, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
             ],
             pY: [[0, 0, 0, 0],
                 [0, 0, 0, 0],
-                [-1, 0, -1, -1],
+                [-1, 0, 0, 0],
                 [0, 0, 0, 0],
             ]
         });
@@ -250,13 +250,20 @@ var Puzzel = /** @class */ (function () {
     };
     Puzzel.prototype.createHeaderText = function () {
         // create header
-        this._$header = $("<div class=\"alert\" style=\"text-align:center; margin:0px;\">\n                <h3>Op <span id=\"box1\" class=\"badge badge-warning\">17 maart</span> 2020 zijn wij <span id=\"box2\" class=\"badge badge-warning\">25 jaar getrouwd</span>!</br>\n                Omdat we nog steeds heel erg <span id=\"box3\" class=\"badge badge-warning\">gelukkig zijn</span> met elkaar,</br>\n                zouden we dit graag samen met onze familie vieren.</br>\n                Hiervoor willen wij jullie dan ook <span id=\"box4\" class=\"badge badge-warning\">uitnodigen</span> op een</br> \n                <span id=\"box5\" class=\"badge badge-warning\">\u2018Dinner and Dance\u2019</span> in het restaurant </br>\n                waar we onze  <span id=\"box6\" class=\"badge badge-warning\">samenwoonst</span> gevierd hebben in <span id=\"box7\" class=\"badge badge-warning\">1993</span>.</br>\n                Wanneer: <span id=\"box8\" class=\"badge badge-warning\">zaterdag 21 maart</span> om 19u30</br>\n                Waar: <span id=\"box9\" class=\"badge badge-warning\">Ter Torre</span>, Broekstraat 109 te Waregem</br>\n                Graag een seintje voor <span id=\"box10\" class=\"badge badge-warning\">1 maart</span> 2020.\n                </h3>\n                </div>");
+        this._$header
+            = $("\n               \n\n\n                <div class=\"container\">\n                <div class=\"row\" style=\"text-align:center; margin-top:35px;\">\n\n                \n              \n                <div class=\"col-12\">\n                <h3>Op <span id=\"box1\" class=\"badge badge-warning\">17 maart</span> 2020 zijn wij <span id=\"box2\" class=\"badge badge-warning\">25 jaar getrouwd</span>!\n                Omdat we nog steeds heel erg <span id=\"box3\" class=\"badge badge-warning\">gelukkig zijn</span> met elkaar,\n                zouden we dit graag samen met onze familie vieren.\n                Hiervoor willen wij jullie dan ook <span id=\"box4\" class=\"badge badge-warning\">uitnodigen</span> op een \n                <span id=\"box5\" class=\"badge badge-warning\">\u2018Dinner and Dance\u2019</span> in het restaurant \n                waar we onze  <span id=\"box6\" class=\"badge badge-warning\">samenwoonst</span> gevierd hebben in <span id=\"box7\" class=\"badge badge-warning\">1993</span>.\n                Wanneer: <span id=\"box8\" class=\"badge badge-warning\">zaterdag 21 maart</span> om 19u30\n                Waar: <span id=\"box9\" class=\"badge badge-warning\">Ter Torre</span>, Broekstraat 109 te Waregem\n                Graag een seintje voor <span id=\"box10\" class=\"badge badge-warning\">1 maart</span> 2020.\n                </h3>\n                </div>\n\n               \n\n\n                </div>\n                </div>");
+        //$('<img src="./src/img/faces/jenna2.png" class="img-fluid" style="">'));
         $('body').append(this._$header);
+        //$('body').append(
+        //    $('<img>', {
+        //        id: 'dsd',
+        //        src: './src/img/faces/jenna2.png'
+        //    }));
     };
     Puzzel.prototype.createQestion = function () {
         this._$div1 = $('<div class= "alert" style = "text-align:center; margin:0px;" > </div>');
         this._$answer = $('<div style="text-align:center; margin:0px;"></div>');
-        this._$div1.append(this._$answer);
+        //this._$div1.append(this._$answer);
         //$('body').append(this._$answer);
     };
     Puzzel.prototype.createAnswer = function () {
@@ -265,7 +272,7 @@ var Puzzel = /** @class */ (function () {
         this._$div1.append(answer);
         $('body').append(this._$div1);
         // hr 
-        $('body').append('<hr>');
+        //$('body').append('<hr>');
     };
     Puzzel.prototype.createPuzzleSpace = function () {
         // create header
@@ -353,7 +360,11 @@ var Puzzel = /** @class */ (function () {
         var photoNbr = this._qArr[this._setting.questionActive].photoNbr;
         var tRow = this._qArr[this._setting.questionActive].typeR;
         var tCol = this._qArr[this._setting.questionActive].typeC;
-        $('img').remove();
+        //$('img').remove();
+        for (var g = 0; g < 20; g++) {
+            if (this._$puzzel[g])
+                this._$puzzel[g].remove();
+        }
         var ii = 0;
         for (var i = 1; i <= tRow; i++) {
             for (var j = 1; j <= tCol; j++) {
@@ -396,7 +407,7 @@ var Puzzel = /** @class */ (function () {
         var wOffset = Math.floor(w / tCol) + 1;
         var hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
         var x = ($(document).width() / 2) - (w / 2);
-        var y = this._$puzzleSpace.position().top + 20;
+        var y = this._$puzzleSpace.position().top;
         var xPos, yPos;
         var xPos1, yPos1;
         var count = tRow * tCol;
