@@ -7,7 +7,7 @@ var Puzzel = /** @class */ (function () {
     //
     function Puzzel() {
         this._$puzzel = [];
-        this._setting = { questionActive: 4, questionPrev: 4, firstQuestion: 1, lastQuestion: 10 };
+        this._setting = { questionActive: 1, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
         this._qArr = [];
         // headertext
         this.createHeaderText();
@@ -26,12 +26,76 @@ var Puzzel = /** @class */ (function () {
     }
     Puzzel.prototype.createQuestions = function () {
         this._qArr.push({ photoNbr: 0, question: '', answer: '' });
-        this._qArr.push({});
-        this._qArr.push({});
-        this._qArr.push({});
+        this._qArr.push({
+            photoNbr: 1,
+            typeR: 2,
+            typeC: 2,
+            question: 'BOX01',
+            answer: '17 maart',
+            $box: this._$header.find("#box1"),
+            pW: 800,
+            pH: 1067,
+            ppX: 98,
+            ppY: 130,
+            pX: [[0, 0, 0, 0],
+                [0, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pY: [[0, 0, 0, 0],
+                [-1, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ]
+        });
+        this._qArr.push({
+            photoNbr: 2,
+            typeR: 2,
+            typeC: 3,
+            question: 'BOX02',
+            answer: '25 jaar getrouwd',
+            $box: this._$header.find("#box2"),
+            pW: 800,
+            pH: 600,
+            ppX: 64,
+            ppY: 74,
+            pX: [[0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pY: [[0, 0, 0, 0],
+                [-1, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ]
+        });
+        this._qArr.push({
+            photoNbr: 3,
+            typeR: 3,
+            typeC: 3,
+            question: 'BOX03',
+            answer: 'gelukkig zijn',
+            $box: this._$header.find("#box3"),
+            pW: 800,
+            pH: 600,
+            ppX: 64,
+            ppY: 49,
+            pX: [[0, 0, -1, 0],
+                [0, 0, 0, 0],
+                [0, -1, -1, 0],
+                [0, 0, 0, 0],
+            ],
+            pY: [[0, 0, 0, 0],
+                [-1, -1, 0, 0],
+                [0, 0, -1, 0],
+                [0, 0, 0, 0],
+            ]
+        });
         this._qArr.push({
             photoNbr: 4,
-            type: 3,
+            typeR: 3,
+            typeC: 3,
             question: 'BOX04',
             answer: 'uitnodigen',
             $box: this._$header.find("#box4"),
@@ -52,7 +116,8 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 5,
-            type: 3,
+            typeR: 3,
+            typeC: 3,
             question: 'BOX05',
             answer: 'dinner & dance',
             $box: this._$header.find("#box5"),
@@ -73,7 +138,8 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 6,
-            type: 4,
+            typeR: 4,
+            typeC: 4,
             question: 'BOX06',
             answer: 'samenwoonst',
             $box: this._$header.find("#box6"),
@@ -94,7 +160,8 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 7,
-            type: 4,
+            typeR: 4,
+            typeC: 4,
             question: 'BOX07',
             answer: '1993',
             $box: this._$header.find("#box7"),
@@ -115,7 +182,8 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 8,
-            type: 4,
+            typeR: 4,
+            typeC: 4,
             question: 'BOX08',
             answer: 'zaterdag 21 maart',
             $box: this._$header.find("#box8"),
@@ -136,6 +204,8 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 9,
+            typeR: 4,
+            typeC: 4,
             question: 'BOX09',
             answer: 'Ter Torre',
             $box: this._$header.find("#box9"),
@@ -156,22 +226,23 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 10,
-            type: 4,
+            typeR: 3,
+            typeC: 3,
             question: 'BOX10',
             answer: '1 maart',
             $box: this._$header.find("#box10"),
             pW: 800,
             pH: 533,
-            ppX: 49,
-            ppY: 32,
+            ppX: 64,
+            ppY: 42,
             pX: [[0, 0, 0, 0],
                 [0, -1, -1, 0],
                 [0, 0, -1, 0],
-                [0, -1, -1, -1],
+                [0, 0, 0, 0],
             ],
             pY: [[0, 0, 0, 0],
-                [0, 0, -1, -1],
-                [0, 0, 0, 0],
+                [0, -1, 0, 0],
+                [0, 0, -1, 0],
                 [0, 0, 0, 0],
             ]
         });
@@ -280,11 +351,12 @@ var Puzzel = /** @class */ (function () {
     };
     Puzzel.prototype.ShowPhoto = function () {
         var photoNbr = this._qArr[this._setting.questionActive].photoNbr;
-        var typ = this._qArr[this._setting.questionActive].type;
+        var tRow = this._qArr[this._setting.questionActive].typeR;
+        var tCol = this._qArr[this._setting.questionActive].typeC;
         $('img').remove();
         var ii = 0;
-        for (var i = 1; i <= typ; i++) {
-            for (var j = 1; j <= typ; j++) {
+        for (var i = 1; i <= tRow; i++) {
+            for (var j = 1; j <= tCol; j++) {
                 var name_1 = photoNbr + '_' + i + '_' + j;
                 var folder = './src/img/foto' + photoNbr + '/' + name_1 + '.png';
                 //if (this._$puzzel[ii] == null) {
@@ -302,7 +374,7 @@ var Puzzel = /** @class */ (function () {
         }
     };
     Puzzel.prototype.ShufflePhoto = function () {
-        var count = this._qArr[this._setting.questionActive].type * this._qArr[this._setting.questionActive].type;
+        var count = this._qArr[this._setting.questionActive].typeR * this._qArr[this._setting.questionActive].typeC;
         for (var i = 0; i < count; i++) {
             var xRandom = (Math.random() * $(document).width()) - 300;
             if (xRandom < 0)
@@ -317,30 +389,31 @@ var Puzzel = /** @class */ (function () {
     };
     Puzzel.prototype.fixPuzzel = function () {
         this._$input.val(this._qArr[this._setting.questionActive].answer);
-        var typ = this._qArr[this._setting.questionActive].type;
+        var tRow = this._qArr[this._setting.questionActive].typeR;
+        var tCol = this._qArr[this._setting.questionActive].typeC;
         var w = this._qArr[this._setting.questionActive].pW;
         var h = this._qArr[this._setting.questionActive].pH;
-        var wOffset = Math.floor(w / this._qArr[this._setting.questionActive].type) + 1;
-        var hOffset = Math.floor(h / this._qArr[this._setting.questionActive].type) + 1; //hOffset += 0.5;
+        var wOffset = Math.floor(w / tCol) + 1;
+        var hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
         var x = ($(document).width() / 2) - (w / 2);
         var y = this._$puzzleSpace.position().top + 20;
         var xPos, yPos;
         var xPos1, yPos1;
-        var count = typ * typ;
+        var count = tRow * tCol;
         var row = 0;
         var col = 0;
         for (var i = 0; i < count; i++) {
             // row
-            row = Math.floor(i / typ);
+            row = Math.floor(i / tCol);
             // col
-            col = (i % typ);
+            col = (i % tCol);
             // start
             if (i == 0) {
                 xPos = x;
                 yPos = y;
             }
             // new line
-            if ((i % typ) == 0) {
+            if ((i % tCol) == 0) {
                 xPos = x;
                 yPos = y + (hOffset * row);
             }
