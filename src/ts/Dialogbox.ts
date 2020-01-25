@@ -344,7 +344,6 @@ export class DBox {
         //this.resetContent();        // IMPORTANT > FOR REMOVE SVG FROM THE DOM !!!!!!!!!!!
         //this.resetFooter();         // IMPORTANT > FOR REMOVE SVG FROM THE DOM !!!!!!!!!!!
         this._$box.remove();
-        
 
         // callback
         if (this._boxOptions.onClose)
@@ -355,6 +354,8 @@ export class DBox {
         this._$box = null;
         this._$body = null;
         this._$footer = null;
+
+        $('body').removeClass('modal-open');
 
     }
 

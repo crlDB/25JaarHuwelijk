@@ -12376,6 +12376,8 @@ a.text-dark:hover, a.text-dark:focus {
 body {
     padding-top: 0px;
     padding-bottom: 0px;
+    background-color: black;
+    color: gray;
 }
 
 .body-content {

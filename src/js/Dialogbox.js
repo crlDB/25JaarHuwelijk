@@ -226,6 +226,7 @@ var DBox = /** @class */ (function () {
         this._$box = null;
         this._$body = null;
         this._$footer = null;
+        $('body').removeClass('modal-open');
     };
     //
     //
