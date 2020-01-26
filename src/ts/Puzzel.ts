@@ -444,12 +444,14 @@ export class Puzzel {
         })
 
         // btn info
-        $('#btnInfo').mousedown((e) => {
+
+        $('#btnInfo').on('mousedown touchstart', (e) => {
             this._pressed = true;
             this._$div1.addClass('alert-danger');
 
             setTimeout(() => {
                 if (this._pressed) {
+                    this._$div1.removeClass('alert-danger');
 
                     this.sizePuzzel(100);
                     this._scale = 1.0;
@@ -458,18 +460,36 @@ export class Puzzel {
                 }
 
             }, 3000);
-        })
-
-        $('#btnInfo').mouseup((e) => {
-           this._pressed = false;
-            this._$div1.removeClass('alert-danger');
-
-        })
-        $('#btnInfo').mouseleave((e) => {
+        });
+        $('#btnInfo').on('mouseup mouseleave touchend', (e) => {
             this._pressed = false;
             this._$div1.removeClass('alert-danger');
+        });
 
-        })
+        //$('#btnInfo').mousedown((e) => {
+        //    this._pressed = true;
+        //    this._$div1.addClass('alert-danger');
+
+        //    setTimeout(() => {
+        //        if (this._pressed) {
+        //            this._$div1.removeClass('alert-danger');
+
+        //            this.sizePuzzel(100);
+        //            this._scale = 1.0;
+
+        //            this.fixPuzzel();
+        //        }
+
+        //    }, 3000);
+        //})
+        //$('#btnInfo').mouseup((e) => {
+
+        //})
+        //$('#btnInfo').mouseleave((e) => {
+        //    this._pressed = false;
+        //    this._$div1.removeClass('alert-danger');
+
+        //})
 
         // btn 25%
         $('#btn25').click((e) => {

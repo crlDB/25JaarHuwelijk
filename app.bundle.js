@@ -1018,25 +1018,40 @@ var Puzzel = /** @class */ (function () {
             }
         });
         // btn info
-        $('#btnInfo').mousedown(function (e) {
+        $('#btnInfo').on('mousedown touchstart', function (e) {
             _this._pressed = true;
             _this._$div1.addClass('alert-danger');
             setTimeout(function () {
                 if (_this._pressed) {
+                    _this._$div1.removeClass('alert-danger');
                     _this.sizePuzzel(100);
                     _this._scale = 1.0;
                     _this.fixPuzzel();
                 }
             }, 3000);
         });
-        $('#btnInfo').mouseup(function (e) {
+        $('#btnInfo').on('mouseup mouseleave touchend', function (e) {
             _this._pressed = false;
             _this._$div1.removeClass('alert-danger');
         });
-        $('#btnInfo').mouseleave(function (e) {
-            _this._pressed = false;
-            _this._$div1.removeClass('alert-danger');
-        });
+        //$('#btnInfo').mousedown((e) => {
+        //    this._pressed = true;
+        //    this._$div1.addClass('alert-danger');
+        //    setTimeout(() => {
+        //        if (this._pressed) {
+        //            this._$div1.removeClass('alert-danger');
+        //            this.sizePuzzel(100);
+        //            this._scale = 1.0;
+        //            this.fixPuzzel();
+        //        }
+        //    }, 3000);
+        //})
+        //$('#btnInfo').mouseup((e) => {
+        //})
+        //$('#btnInfo').mouseleave((e) => {
+        //    this._pressed = false;
+        //    this._$div1.removeClass('alert-danger');
+        //})
         // btn 25%
         $('#btn25').click(function (e) {
             _this.sizePuzzel(25);
