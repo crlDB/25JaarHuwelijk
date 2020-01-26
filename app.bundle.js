@@ -1011,7 +1011,7 @@ var Puzzel = /** @class */ (function () {
                 _this._setting.questionPrev = _this._setting.questionActive;
                 _this._setting.questionActive++;
                 if (_this._setting.questionActive > _this._setting.lastQuestion)
-                    _this._setting.questionActive = _this._setting.lastQuestion;
+                    _this._setting.questionActive = _this._setting.firstQuestion;
                 _this.QuestionShow();
                 if (_this._qArr[_this._setting.questionActive].solved)
                     _this.fixPuzzel();
@@ -1021,6 +1021,7 @@ var Puzzel = /** @class */ (function () {
         $('#btnInfo').on('mousedown touchstart', function (e) {
             _this._pressed = true;
             _this._$div1.addClass('alert-danger');
+            _this.fixPuzzel();
             setTimeout(function () {
                 if (_this._pressed) {
                     _this._$div1.removeClass('alert-danger');
@@ -1033,6 +1034,21 @@ var Puzzel = /** @class */ (function () {
         $('#btnInfo').on('mouseup mouseleave touchend', function (e) {
             _this._pressed = false;
             _this._$div1.removeClass('alert-danger');
+        });
+        $('form').submit(function (e) {
+            e.stopImmediatePropagation();
+            _this.sizePuzzel(100);
+            _this._scale = 1.0;
+            if (_this.checkAnswer()) {
+                _this._setting.questionPrev = _this._setting.questionActive;
+                _this._setting.questionActive++;
+                if (_this._setting.questionActive > _this._setting.lastQuestion)
+                    _this._setting.questionActive = _this._setting.firstQuestion;
+                _this.QuestionShow();
+                if (_this._qArr[_this._setting.questionActive].solved)
+                    _this.fixPuzzel();
+            }
+            return false;
         });
         //$('#btnInfo').mousedown((e) => {
         //    this._pressed = true;
@@ -1161,7 +1177,7 @@ var Puzzel = /** @class */ (function () {
             var xRandom = (Math.random() * $(document).width()) - 300;
             if (xRandom < 0)
                 xRandom = 0;
-            var yRandom = Math.random() * 1000 + this._$puzzleSpace.position().top;
+            var yRandom = Math.random() * 100 + this._$puzzleSpace.position().top;
             this._$puzzel[i].css({
                 position: 'absolute',
                 left: xRandom + 'px',
@@ -1176,8 +1192,8 @@ var Puzzel = /** @class */ (function () {
         var w = this._qArr[this._setting.questionActive].pW * this._scale;
         var h = this._qArr[this._setting.questionActive].pH * this._scale;
         var hCor = this._qArr[this._setting.questionActive].pH - h;
-        var ppX = this._qArr[this._setting.questionActive].ppX * this._scale;
-        var ppY = this._qArr[this._setting.questionActive].ppY * this._scale;
+        var ppX = this._qArr[this._setting.questionActive].ppX; // * this._scale;
+        var ppY = this._qArr[this._setting.questionActive].ppY; // * this._scale;
         var wOffset = Math.floor(w / tCol) + 1;
         var hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
         var x = ($(document).width() / 2) - (w / 2);

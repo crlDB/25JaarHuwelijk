@@ -432,7 +432,7 @@ export class Puzzel {
                 this._setting.questionPrev = this._setting.questionActive;
                 this._setting.questionActive++;
                 if (this._setting.questionActive > this._setting.lastQuestion)
-                    this._setting.questionActive = this._setting.lastQuestion;
+                    this._setting.questionActive = this._setting.firstQuestion;
 
                 this.QuestionShow();
 
@@ -449,6 +449,8 @@ export class Puzzel {
             this._pressed = true;
             this._$div1.addClass('alert-danger');
 
+            this.fixPuzzel();
+
             setTimeout(() => {
                 if (this._pressed) {
                     this._$div1.removeClass('alert-danger');
@@ -464,6 +466,27 @@ export class Puzzel {
         $('#btnInfo').on('mouseup mouseleave touchend', (e) => {
             this._pressed = false;
             this._$div1.removeClass('alert-danger');
+        });
+
+        $('form').submit((e) => {
+            e.stopImmediatePropagation();
+
+            this.sizePuzzel(100);
+            this._scale = 1.0;
+
+            if (this.checkAnswer()) {
+                this._setting.questionPrev = this._setting.questionActive;
+                this._setting.questionActive++;
+                if (this._setting.questionActive > this._setting.lastQuestion)
+                    this._setting.questionActive = this._setting.firstQuestion;
+
+                this.QuestionShow();
+
+                if (this._qArr[this._setting.questionActive].solved)
+                    this.fixPuzzel();
+            }
+
+            return false;
         });
 
         //$('#btnInfo').mousedown((e) => {
@@ -652,7 +675,7 @@ export class Puzzel {
             if (xRandom < 0)
                 xRandom = 0;
 
-            let yRandom = Math.random() * 1000 + this._$puzzleSpace.position().top;
+            let yRandom = Math.random() * 100 + this._$puzzleSpace.position().top;
 
             this._$puzzel[i].css({
                 position: 'absolute',
@@ -671,8 +694,8 @@ export class Puzzel {
         let w = this._qArr[this._setting.questionActive].pW * this._scale;
         let h = this._qArr[this._setting.questionActive].pH * this._scale;
         let hCor = this._qArr[this._setting.questionActive].pH - h;
-        let ppX = this._qArr[this._setting.questionActive].ppX * this._scale;
-        let ppY = this._qArr[this._setting.questionActive].ppY * this._scale;
+        let ppX = this._qArr[this._setting.questionActive].ppX; // * this._scale;
+        let ppY = this._qArr[this._setting.questionActive].ppY; // * this._scale;
 
         let wOffset = Math.floor(w / tCol) + 1;
         let hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
