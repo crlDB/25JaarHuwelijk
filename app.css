@@ -12388,9 +12388,44 @@ body {
 
 .test {
     text-align: center
-
 }
 
+.ph25 {
+    /*width: 25%;*/
+    -webkit-transform: scale(0.25);
+    -moz-transform: scale(0.25);
+    -ms-transform: scale(0.25);
+    -o-transform: scale(0.25);
+    transform: scale(0.25);
+    transform-origin: left;
+}
+
+.ph50 {
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -o-transform: scale(0.5);
+    transform: scale(0.5);
+    transform-origin: left;
+}
+
+.ph75 {
+    -webkit-transform: scale(0.75);
+    -moz-transform: scale(0.75);
+    -ms-transform: scale(0.75);
+    -o-transform: scale(0.75);
+    transform: scale(0.75);
+    transform-origin: left;
+}
+
+.ph100 {
+    -webkit-transform: scale(1.0);
+    -moz-transform: scale(1.0);
+    -ms-transform: scale(1.0);
+    -o-transform: scale(1.0);
+    transform: scale(1.0);
+    transform-origin: left;
+}
 
 
 /*# sourceMappingURL=app.css.map*/

@@ -12,6 +12,7 @@ interface ISetting {
 interface IQuestion {
     question?: string;
     answer?: string;
+    solved?: boolean;
     $box?: JQuery<HTMLElement>;
     photoNbr?: number;
     typeR?: number;
@@ -44,10 +45,11 @@ export class Puzzel {
 
     private _setting: ISetting = { questionActive: 1, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
     private _qArr: IQuestion[] = [];
-    db: DBox;
-    _$puzzleSpace: JQuery<HTMLElement>;
-    _$div1: JQuery<HTMLElement>;
-
+    private db: DBox;
+    private _$puzzleSpace: JQuery<HTMLElement>;
+    private _$div1: JQuery<HTMLElement>;
+    private _scale: number = 1.0;
+    _pressed: boolean;
 
 
 
@@ -82,6 +84,7 @@ export class Puzzel {
         this._qArr.push({ photoNbr: 0, question: '', answer: '' });
         this._qArr.push({
             photoNbr: 1,
+            solved: false,
             typeR: 2,
             typeC: 2,
             question: 'BOX01',
@@ -105,6 +108,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 2,
+            solved: false,
             typeR: 2,
             typeC: 3,
             question: 'BOX02',
@@ -128,6 +132,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 3,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX03',
@@ -150,6 +155,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 4,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX04',
@@ -172,10 +178,11 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 5,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX05',
-            answer: 'dinner & dance',
+            answer: 'Dinner & Dance',
             $box: this._$header.find("#box5"),
             pW: 800,
             pH: 600,
@@ -195,6 +202,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 6,
+            solved: false,
             typeR: 3,
             typeC: 2,
             question: 'BOX06',
@@ -217,6 +225,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 7,
+            solved: false,
             typeR: 4,
             typeC: 4,
             question: 'BOX07',
@@ -240,6 +249,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 8,
+            solved: false,
             typeR: 4,
             typeC: 4,
             question: 'BOX08',
@@ -262,6 +272,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 9,
+            solved: false,
             typeR: 4,
             typeC: 4,
             question: 'BOX09',
@@ -284,6 +295,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 10,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX10',
@@ -312,36 +324,28 @@ export class Puzzel {
 
         // create header
         this._$header
-          = $(`
-               
-
-
+            = $(`
                 <div class="container">
                 <div class="row" style="text-align:center; margin-top:35px;">
-
-                
               
                 <div class="col-12">
-                <h3>Op <span id="box1" class="badge badge-warning">17 maart</span> 2020 zijn wij <span id="box2" class="badge badge-warning">25 jaar getrouwd</span>!
-                Omdat we nog steeds heel erg <span id="box3" class="badge badge-warning">gelukkig zijn</span> met elkaar,
+                <h3>Op <span id="box1" class="badge badge-warning">?</span> 2020 zijn wij <span id="box2" class="badge badge-warning">?</span>!
+                Omdat we nog steeds heel erg <span id="box3" class="badge badge-warning">?</span> met elkaar,
                 zouden we dit graag samen met onze familie vieren.
-                Hiervoor willen wij jullie dan ook <span id="box4" class="badge badge-warning">uitnodigen</span> op een 
-                <span id="box5" class="badge badge-warning">‘Dinner and Dance’</span> in het restaurant 
-                waar we onze  <span id="box6" class="badge badge-warning">samenwoonst</span> gevierd hebben in <span id="box7" class="badge badge-warning">1993</span>.
-                Wanneer: <span id="box8" class="badge badge-warning">zaterdag 21 maart</span> om 19u30
-                Waar: <span id="box9" class="badge badge-warning">Ter Torre</span>, Broekstraat 109 te Waregem
-                Graag een seintje voor <span id="box10" class="badge badge-warning">1 maart</span> 2020.
+                Hiervoor willen wij jullie dan ook <span id="box4" class="badge badge-warning">?</span> op een 
+                <span id="box5" class="badge badge-warning">?</span> in het restaurant 
+                waar we onze  <span id="box6" class="badge badge-warning">?</span> gevierd hebben in <span id="box7" class="badge badge-warning">?</span>.
+                Wanneer: <span id="box8" class="badge badge-warning">?</span> om 19u30.
+                Waar: <span id="box9" class="badge badge-warning">?</span>, Broekstraat 109 te Waregem.
+                Graag een seintje voor <span id="box10" class="badge badge-warning">?</span> 2020.
                 </h3>
                 </div>
-
-               
-
 
                 </div>
                 </div>`);
 
 
-            //$('<img src="./src/img/faces/jenna2.png" class="img-fluid" style="">'));
+        //$('<img src="./src/img/faces/jenna2.png" class="img-fluid" style="">'));
         $('body').append(this._$header);
         //$('body').append(
         //    $('<img>', {
@@ -365,14 +369,19 @@ export class Puzzel {
         let answer = $(`
             <div class="row justify-content-center">
             <form class="form-inline center alert alert-primary" style="">
-              <button id="btnInfo" type="button" class="btn btn-primary mb-2">?</button>
+              <button id="btn25" type="button" class="btn btn-primary m-1">25%</button>
+              <button id="btn50" type="button" class="btn btn-primary m-1">50%</button>
+              <button id="btn75" type="button" class="btn btn-primary m-1">75%</button>
+              <button id="btn100" type="button" class="btn btn-primary m-1">100%</button>
 
-              <div class="form-group mx-sm-3 mb-2">
+              <button id="btnInfo" type="button" class="btn btn-primary m-1">?</button>
+
+              <div class="form-group mx-sm-3 m-1">
                 <label for="inputPassword2" class="sr-only">ANTWOORD</label>
                 <input type="text" class="form-control" id="inputAnswer" placeholder="antwoord">
               </div>
-              <button id="btnVorige" type="button" class="btn btn-primary m-2">&lt;</button>
-              <button id="btnVolgende" type="button" class="btn btn-primary m-2">&gt;</button>
+              <button id="btnVorige" type="button" class="btn btn-primary m-1">&lt;</button>
+              <button id="btnVolgende" type="button" class="btn btn-primary m-1">&gt;</button>
             </form>
             </div>`).css('text-align', 'center');
         this._$div1.append(answer);
@@ -399,6 +408,9 @@ export class Puzzel {
         // btn vorige
         $('#btnVorige').click((e) => {
 
+            this.sizePuzzel(100);
+            this._scale = 1.0;
+
             this._setting.questionPrev = this._setting.questionActive;
             this._setting.questionActive--;
             if (this._setting.questionActive < this._setting.firstQuestion)
@@ -406,28 +418,81 @@ export class Puzzel {
 
             this.QuestionShow();
 
-            this.fixPuzzel();
+            if (this._qArr[this._setting.questionActive].solved)
+                this.fixPuzzel();
         })
 
         // btn volgende
         $('#btnVolgende').click((e) => {
+
+            this.sizePuzzel(100);
+            this._scale = 1.0;
 
             if (this.checkAnswer()) {
                 this._setting.questionPrev = this._setting.questionActive;
                 this._setting.questionActive++;
                 if (this._setting.questionActive > this._setting.lastQuestion)
                     this._setting.questionActive = this._setting.lastQuestion;
+
                 this.QuestionShow();
 
+                if (this._qArr[this._setting.questionActive].solved)
+                    this.fixPuzzel();
             }
 
 
         })
 
         // btn info
-        $('#btnInfo').click((e) => {
+        $('#btnInfo').mousedown((e) => {
+            this._pressed = true;
+            this._$div1.addClass('alert-danger');
 
-            this.fixPuzzel();
+            setTimeout(() => {
+                if (this._pressed) {
+
+                    this.sizePuzzel(100);
+                    this._scale = 1.0;
+
+                    this.fixPuzzel();
+                }
+
+            }, 3000);
+        })
+
+        $('#btnInfo').mouseup((e) => {
+           this._pressed = false;
+            this._$div1.removeClass('alert-danger');
+
+        })
+        $('#btnInfo').mouseleave((e) => {
+            this._pressed = false;
+            this._$div1.removeClass('alert-danger');
+
+        })
+
+        // btn 25%
+        $('#btn25').click((e) => {
+
+            this.sizePuzzel(25);
+            this._scale = 0.25;
+        })
+        // btn 50%
+        $('#btn50').click((e) => {
+            this.sizePuzzel(50);
+            this._scale = 0.50;
+
+        })
+        // btn 75%
+        $('#btn75').click((e) => {
+            this.sizePuzzel(75);
+            this._scale = 0.75;
+
+        })
+        // btn 100%
+        $('#btn100').click((e) => {
+            this.sizePuzzel(100);
+            this._scale = 1.0;
 
         })
 
@@ -441,13 +506,18 @@ export class Puzzel {
         good = good.toLowerCase();
 
         if (answer == good) {
-            this.boxAnswerOK();
+            this._qArr[this._setting.questionActive].$box.text(this._qArr[this._setting.questionActive].answer);
+
+            if (!this._qArr[this._setting.questionActive].solved)
+                this.boxAnswerOK();
+
+            this._qArr[this._setting.questionActive].solved = true;
+
             return true;
         }
         else {
             this.boxAnswerNOK();
             return false;
-
         }
 
     }
@@ -457,7 +527,7 @@ export class Puzzel {
         let db = new DBox({
             type: BoxType.Alert,
 
-            content: `<div class="alert alert-danger" style="width: 400px; text-align: center; padding: 0px; margin: 0px;" role="alert">
+            content: `<div class="alert alert-danger" style="width: 250px; text-align: center; padding: 0px; margin: 0px;" role="alert">
             </br><span></span>
             </br><span>Antwoord is verkeerd</span>
             </br><span>Probeer opnieuw</span>
@@ -467,7 +537,7 @@ export class Puzzel {
             titleColor: '#A03545',
             margin: '0px',
             padding: '0px',
-            posLeft: ($(document).width() / 2) - 200,
+            posLeft: ($(document).width() / 2) - 270,
             posTop: 0,
         });
     }
@@ -477,7 +547,7 @@ export class Puzzel {
         let db = new DBox({
             type: BoxType.Alert,
 
-            content: `<div class="alert alert-success" style="width: 400px; text-align: center; padding: 0px; margin: 0px;" role="alert">
+            content: `<div class="alert alert-success" style="width: 250px; text-align: center; padding: 0px; margin: 0px;" role="alert">
             </br><span></span>
             </br><span>Antwoord is juist</span>
             </br><span>Op naar de volgende</span>
@@ -487,7 +557,7 @@ export class Puzzel {
             titleColor: '#1E7D34',
             margin: '0px',
             padding: '0px',
-            posLeft: ($(document).width() / 2) - 200,
+            posLeft: ($(document).width()) - 270,
             posTop: 0,
         });
     }
@@ -511,7 +581,7 @@ export class Puzzel {
         this.ShowPhoto();
         // shuffle photo
         this.ShufflePhoto();
-        
+
 
 
 
@@ -536,13 +606,13 @@ export class Puzzel {
                 let folder: string = './src/img/foto' + photoNbr + '/' + name + '.png';
                 //if (this._$puzzel[ii] == null) {
 
-                    this._$puzzel[ii] = $('<img>', {
-                        id: name,
-                        src: folder
-                    });
-                    this._$puzzel[ii].draggable();
+                this._$puzzel[ii] = $('<img>', {
+                    id: name,
+                    src: folder
+                });
+                this._$puzzel[ii].draggable();
 
-                    $('body').append(this._$puzzel[ii]);
+                $('body').append(this._$puzzel[ii]);
                 //} else {
                 //    this._$puzzel[ii].attr('src', folder);
                 //}
@@ -578,8 +648,12 @@ export class Puzzel {
         let tRow: number = this._qArr[this._setting.questionActive].typeR;
         let tCol: number = this._qArr[this._setting.questionActive].typeC;
 
-        let w = this._qArr[this._setting.questionActive].pW;
-        let h = this._qArr[this._setting.questionActive].pH;
+        let w = this._qArr[this._setting.questionActive].pW * this._scale;
+        let h = this._qArr[this._setting.questionActive].pH * this._scale;
+        let hCor = this._qArr[this._setting.questionActive].pH - h;
+        let ppX = this._qArr[this._setting.questionActive].ppX * this._scale;
+        let ppY = this._qArr[this._setting.questionActive].ppY * this._scale;
+
         let wOffset = Math.floor(w / tCol) + 1;
         let hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
         let x = ($(document).width() / 2) - (w / 2);
@@ -617,14 +691,14 @@ export class Puzzel {
 
             //alert(rij + '/ ' + col);
             if (this._qArr[this._setting.questionActive].pX[row][col] > 0)
-                xPos1 = xPos + this._qArr[this._setting.questionActive].ppX;
+                xPos1 = xPos + ppX;
             if (this._qArr[this._setting.questionActive].pX[row][col] < 0)
-                xPos1 = xPos - this._qArr[this._setting.questionActive].ppX;
+                xPos1 = xPos - ppX;
 
             if (this._qArr[this._setting.questionActive].pY[row][col] > 0)
-                yPos1 = yPos + this._qArr[this._setting.questionActive].ppY;
+                yPos1 = yPos + ppY;
             if (this._qArr[this._setting.questionActive].pY[row][col] < 0)
-                yPos1 = yPos - this._qArr[this._setting.questionActive].ppY;
+                yPos1 = yPos - ppY;
 
 
             this._$puzzel[i]
@@ -632,6 +706,51 @@ export class Puzzel {
                     left: xPos1 + 'px',
                     top: yPos1 + 'px'
                 }, 500);
+        };
+
+
+
+
+    }
+
+    private sizePuzzel(size: number) {
+
+        let tRow: number = this._qArr[this._setting.questionActive].typeR;
+        let tCol: number = this._qArr[this._setting.questionActive].typeC;
+
+        let count = tRow * tCol;
+        let row: number = 0;
+        let col: number = 0;
+
+        for (var i = 0; i < count; i++) {
+
+            if (!this._$puzzel[i])
+                continue;
+
+            // remmove classes
+            this._$puzzel[i].removeClass('ph25');
+            this._$puzzel[i].removeClass('ph50');
+            this._$puzzel[i].removeClass('ph75');
+            this._$puzzel[i].removeClass('ph100');
+
+
+            // add class
+            switch (size) {
+                case 25:
+                    this._$puzzel[i].addClass('ph25');
+                    break;
+                case 50:
+
+                    this._$puzzel[i].addClass('ph50');
+                    break;
+                case 75:
+                    this._$puzzel[i].addClass('ph75');
+                    break
+                case 100:
+                    this._$puzzel[i].addClass('ph100');
+                    break;
+                default:
+            }
         };
 
 
