@@ -706,7 +706,7 @@ var Puzzel = /** @class */ (function () {
     //
     function Puzzel() {
         this._$puzzel = [];
-        this._setting = { questionActive: 1, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
+        this._setting = { questionActive: 10, questionPrev: 10, firstQuestion: 1, lastQuestion: 10 };
         this._qArr = [];
         this._scale = 1.0;
         // headertext
@@ -728,7 +728,7 @@ var Puzzel = /** @class */ (function () {
         this._qArr.push({ photoNbr: 0, question: '', answer: '' });
         this._qArr.push({
             photoNbr: 1,
-            solved: false,
+            solved: true,
             typeR: 2,
             typeC: 2,
             question: 'BOX01',
@@ -747,11 +747,19 @@ var Puzzel = /** @class */ (function () {
                 [-1, -1, 0, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
-            ]
+            ],
+            pYS: [[0, 0, 0, 0],
+                [-50, -50, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 2,
-            solved: false,
+            solved: true,
             typeR: 2,
             typeC: 3,
             question: 'BOX02',
@@ -770,11 +778,19 @@ var Puzzel = /** @class */ (function () {
                 [-1, -1, 0, 0],
                 [0, 0, 0, 0],
                 [0, 0, 0, 0],
-            ]
+            ],
+            pYS: [[0, 0, -28, 0],
+                [-28, -28, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 3,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX03',
@@ -793,11 +809,19 @@ var Puzzel = /** @class */ (function () {
                 [-1, -1, 0, 0],
                 [0, 0, -1, 0],
                 [0, 0, 0, 0],
-            ]
+            ],
+            pYS: [[0, 0, -18, 0],
+                [-37, -37, 0, 0],
+                [0, 0, -19, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 4,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX04',
@@ -816,11 +840,19 @@ var Puzzel = /** @class */ (function () {
                 [0, -1, -1, 0],
                 [0, 0, -1, 0],
                 [0, 0, 0, 0],
-            ]
+            ],
+            pYS: [[-19, 0, 0, 0],
+                [-19, -37, -19, 0],
+                [0, 0, -19, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 5,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX05',
@@ -839,11 +871,19 @@ var Puzzel = /** @class */ (function () {
                 [0, 0, -1, 0],
                 [-1, -1, 0, 0],
                 [0, 0, 0, 0],
-            ]
+            ],
+            pYS: [[-18, -18, 0, 0],
+                [0, 0, -37, 0],
+                [-19, -19, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 6,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 2,
             question: 'BOX06',
@@ -862,57 +902,81 @@ var Puzzel = /** @class */ (function () {
                 [0, 0, 0, 0],
                 [-1, 0, 0, 0],
                 [0, 0, 0, 0],
-            ]
+            ],
+            pYS: [[0, 0, 0, 0],
+                [+28, 0, 0, 0],
+                [0, +28, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 7,
-            solved: false,
-            typeR: 4,
-            typeC: 4,
+            solved: true,
+            typeR: 2,
+            typeC: 2,
             question: 'BOX07',
             answer: '1993',
             $box: this._$header.find("#box7"),
             pW: 800,
             pH: 530,
-            ppX: 49,
-            ppY: 32,
-            pX: [[0, 0, -1, 0],
+            ppX: 98,
+            ppY: 65,
+            pX: [[0, -1, 0, 0],
+                [0, -1, 0, 0],
                 [0, 0, 0, 0],
-                [0, -1, 0, -1],
-                [0, -1, 0, -1],
+                [0, 0, 0, 0],
             ],
             pY: [[0, 0, 0, 0],
                 [-1, 0, 0, 0],
-                [0, 0, -1, -1],
-                [-1, 0, 0, 0],
-            ]
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS: [[0, -25, 0, 0],
+                [-25, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 8,
-            solved: false,
-            typeR: 4,
-            typeC: 4,
+            solved: true,
+            typeR: 2,
+            typeC: 3,
             question: 'BOX08',
             answer: 'zaterdag 21 maart',
             $box: this._$header.find("#box8"),
             pW: 800,
             pH: 600,
-            ppX: 49,
-            ppY: 36,
+            ppX: 64,
+            ppY: 74,
             pX: [[0, -1, 0, 0],
-                [0, 0, 0, -1],
+                [0, -1, -1, 0],
                 [0, 0, 0, 0],
-                [0, 0, -1, 0],
+                [0, 0, 0, 0],
             ],
             pY: [[0, 0, 0, 0],
-                [0, 0, -1, -1],
-                [-1, 0, -1, 0],
-                [-1, 0, -1, -1],
-            ]
+                [0, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS: [[-29, 0, -29, 0],
+                [0, -28, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 9,
-            solved: false,
+            solved: true,
             typeR: 4,
             typeC: 4,
             question: 'BOX09',
@@ -931,11 +995,19 @@ var Puzzel = /** @class */ (function () {
                 [0, -1, -1, -1],
                 [0, -1, 0, -1],
                 [-1, -1, -1, -1],
-            ]
+            ],
+            pYS: [[-13, 0, 0, 0],
+                [-13, -13, -26, -13],
+                [0, -13, 0, -13],
+                [-13, -13, -13, -13],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 10,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX10',
@@ -954,7 +1026,15 @@ var Puzzel = /** @class */ (function () {
                 [0, -1, 0, 0],
                 [0, 0, -1, 0],
                 [0, 0, 0, 0],
-            ]
+            ],
+            pYS: [[-16, 0, -16, 0],
+                [-16, -33, 0, 0],
+                [0, 0, -16, 0],
+                [0, 0, 0, 0],
+            ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._$input = $('#inputAnswer');
     };
@@ -993,8 +1073,6 @@ var Puzzel = /** @class */ (function () {
         var _this = this;
         // btn vorige
         $('#btnVorige').click(function (e) {
-            _this.sizePuzzel(100);
-            _this._scale = 1.0;
             _this._setting.questionPrev = _this._setting.questionActive;
             _this._setting.questionActive--;
             if (_this._setting.questionActive < _this._setting.firstQuestion)
@@ -1005,8 +1083,6 @@ var Puzzel = /** @class */ (function () {
         });
         // btn volgende
         $('#btnVolgende').click(function (e) {
-            _this.sizePuzzel(100);
-            _this._scale = 1.0;
             if (_this.checkAnswer()) {
                 _this._setting.questionPrev = _this._setting.questionActive;
                 _this._setting.questionActive++;
@@ -1025,8 +1101,6 @@ var Puzzel = /** @class */ (function () {
             setTimeout(function () {
                 if (_this._pressed) {
                     _this._$div1.removeClass('alert-danger');
-                    _this.sizePuzzel(100);
-                    _this._scale = 1.0;
                     _this.fixPuzzel();
                 }
             }, 3000);
@@ -1037,8 +1111,6 @@ var Puzzel = /** @class */ (function () {
         });
         $('form').submit(function (e) {
             e.stopImmediatePropagation();
-            _this.sizePuzzel(100);
-            _this._scale = 1.0;
             if (_this.checkAnswer()) {
                 _this._setting.questionPrev = _this._setting.questionActive;
                 _this._setting.questionActive++;
@@ -1070,23 +1142,27 @@ var Puzzel = /** @class */ (function () {
         //})
         // btn 25%
         $('#btn25').click(function (e) {
-            _this.sizePuzzel(25);
             _this._scale = 0.25;
+            _this.sizePuzzel(25);
+            _this.showButtonSelect(25);
         });
         // btn 50%
         $('#btn50').click(function (e) {
-            _this.sizePuzzel(50);
             _this._scale = 0.50;
+            _this.sizePuzzel(50);
+            _this.showButtonSelect(50);
         });
         // btn 75%
         $('#btn75').click(function (e) {
-            _this.sizePuzzel(75);
             _this._scale = 0.75;
+            _this.sizePuzzel(75);
+            _this.showButtonSelect(75);
         });
         // btn 100%
         $('#btn100').click(function (e) {
-            _this.sizePuzzel(100);
             _this._scale = 1.0;
+            _this.sizePuzzel(100);
+            _this.showButtonSelect(100);
         });
     };
     Puzzel.prototype.checkAnswer = function () {
@@ -1142,6 +1218,8 @@ var Puzzel = /** @class */ (function () {
         this.ShowPhoto();
         // shuffle photo
         this.ShufflePhoto();
+        // size photo
+        this.sizePuzzel(this._scale * 100);
     };
     Puzzel.prototype.ShowPhoto = function () {
         var photoNbr = this._qArr[this._setting.questionActive].photoNbr;
@@ -1191,9 +1269,10 @@ var Puzzel = /** @class */ (function () {
         var tCol = this._qArr[this._setting.questionActive].typeC;
         var w = this._qArr[this._setting.questionActive].pW * this._scale;
         var h = this._qArr[this._setting.questionActive].pH * this._scale;
+        console.log('scale > ' + this._scale);
         var hCor = this._qArr[this._setting.questionActive].pH - h;
-        var ppX = this._qArr[this._setting.questionActive].ppX; // * this._scale;
-        var ppY = this._qArr[this._setting.questionActive].ppY; // * this._scale;
+        var ppX = this._qArr[this._setting.questionActive].ppX * this._scale;
+        var ppY = this._qArr[this._setting.questionActive].ppY * this._scale;
         var wOffset = Math.floor(w / tCol) + 1;
         var hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
         var x = ($(document).width() / 2) - (w / 2);
@@ -1230,8 +1309,21 @@ var Puzzel = /** @class */ (function () {
                 xPos1 = xPos - ppX;
             if (this._qArr[this._setting.questionActive].pY[row][col] > 0)
                 yPos1 = yPos + ppY;
-            if (this._qArr[this._setting.questionActive].pY[row][col] < 0)
+            if (this._qArr[this._setting.questionActive].pY[row][col] < 0) {
                 yPos1 = yPos - ppY;
+            }
+            // extra correction zooming
+            switch (this._scale) {
+                case 0.75:
+                    yPos1 = yPos1 + (this._qArr[this._setting.questionActive].pYS[row][col] * this._qArr[this._setting.questionActive].pYS75);
+                    break;
+                case 0.5:
+                    yPos1 = yPos1 + (this._qArr[this._setting.questionActive].pYS[row][col] * this._qArr[this._setting.questionActive].pYS50);
+                    break;
+                case 0.25:
+                    yPos1 = yPos1 + (this._qArr[this._setting.questionActive].pYS[row][col] * this._qArr[this._setting.questionActive].pYS25);
+                    break;
+            }
             this._$puzzel[i]
                 .animate({
                 left: xPos1 + 'px',
@@ -1272,6 +1364,31 @@ var Puzzel = /** @class */ (function () {
             }
         }
         ;
+    };
+    Puzzel.prototype.showButtonSelect = function (scale) {
+        var b25 = $('#btn25');
+        var b50 = $('#btn50');
+        var b75 = $('#btn75');
+        var b100 = $('#btn100');
+        b25.removeClass('btn-success');
+        b50.removeClass('btn-success');
+        b75.removeClass('btn-success');
+        b100.removeClass('btn-success');
+        switch (scale) {
+            case 25:
+                b25.addClass('btn-success');
+                break;
+            case 50:
+                b50.addClass('btn-success');
+                break;
+            case 75:
+                b75.addClass('btn-success');
+                break;
+            case 100:
+                b100.addClass('btn-success');
+                break;
+            default:
+        }
     };
     return Puzzel;
 }());

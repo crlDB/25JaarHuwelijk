@@ -24,6 +24,11 @@ interface IQuestion {
 
     pX?: any;
     pY?: any;
+    pYS?: any;
+    pYS25?: number;
+    pYS50?: number;
+    pYS75?: number;
+
 }
 
 
@@ -43,7 +48,7 @@ export class Puzzel {
     private _$input: JQuery<HTMLElement>;
     private _$puzzel: JQuery<HTMLElement>[] = [];
 
-    private _setting: ISetting = { questionActive: 1, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
+    private _setting: ISetting = { questionActive: 10, questionPrev: 10, firstQuestion: 1, lastQuestion: 10 };
     private _qArr: IQuestion[] = [];
     private db: DBox;
     private _$puzzleSpace: JQuery<HTMLElement>;
@@ -84,7 +89,7 @@ export class Puzzel {
         this._qArr.push({ photoNbr: 0, question: '', answer: '' });
         this._qArr.push({
             photoNbr: 1,
-            solved: false,
+            solved: true,
             typeR: 2,
             typeC: 2,
             question: 'BOX01',
@@ -94,21 +99,32 @@ export class Puzzel {
             pH: 1067,
             ppX: 98,
             ppY: 130,
-            pX: [[0, 0, 0, 0],
-            [0, -1, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [-1, -1, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            ]
+            pX:
+                [[0, 0, 0, 0],
+                [0, -1, 0, 0], //[0, -1, 0, 0]
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [-1, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[0, 0, 0, 0],
+                [-50, -50, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
 
         });
         this._qArr.push({
             photoNbr: 2,
-            solved: false,
+            solved: true,
             typeR: 2,
             typeC: 3,
             question: 'BOX02',
@@ -118,21 +134,31 @@ export class Puzzel {
             pH: 600,
             ppX: 64,
             ppY: 74,
-            pX: [[0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [-1, -1, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            ]
-
+            pX:
+                [[0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [-1, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[0, 0, -28, 0],
+                [-28, -28, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 3,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX03',
@@ -142,20 +168,31 @@ export class Puzzel {
             pH: 600,
             ppX: 64,
             ppY: 49,
-            pX: [[0, 0, -1, 0],
-            [0, 0, 0, 0],
-            [0, -1, -1, 0],
-            [0, 0, 0, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [-1, -1, 0, 0],
-            [0, 0, -1, 0],
-            [0, 0, 0, 0],
-            ]
+            pX:
+                [[0, 0, -1, 0],
+                [0, 0, 0, 0],
+                [0, -1, -1, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [-1, -1, 0, 0],
+                [0, 0, -1, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[0, 0, -18, 0],
+                [-37, -37, 0, 0],
+                [0, 0, -19, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 4,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX04',
@@ -165,20 +202,32 @@ export class Puzzel {
             pH: 600,
             ppX: 64,
             ppY: 49,
-            pX: [[0, -1, -1, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [0, -1, -1, 0],
-            [0, 0, -1, 0],
-            [0, 0, 0, 0],
-            ]
+            pX:
+                [[0, -1, -1, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [0, -1, -1, 0],
+                [0, 0, -1, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[-19, 0, 0, 0],
+                [-19, -37, -19, 0],
+                [0, 0, -19, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
+
         });
         this._qArr.push({
             photoNbr: 5,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX05',
@@ -188,21 +237,32 @@ export class Puzzel {
             pH: 600,
             ppX: 64,
             ppY: 49,
-            pX: [[0, -1, 0, 0],
-            [0, -1, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [0, 0, -1, 0],
-            [-1, -1, 0, 0],
-            [0, 0, 0, 0],
-            ]
+            pX:
+                [[0, -1, 0, 0],
+                [0, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [0, 0, -1, 0],
+                [-1, -1, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[-18, -18, 0, 0],
+                [0, 0, -37, 0],
+                [-19, -19, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
 
         });
         this._qArr.push({
             photoNbr: 6,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 2,
             question: 'BOX06',
@@ -212,67 +272,99 @@ export class Puzzel {
             pH: 906,
             ppX: 36,
             ppY: 75,
-            pX: [[0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [-1, 0, 0, 0],
-            [0, 0, 0, 0],
-            ]
+            pX:
+                [[0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [-1, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[0, 0, 0, 0],
+                [+28, 0, 0, 0],
+                [0, +28, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 7,
-            solved: false,
-            typeR: 4,
-            typeC: 4,
+            solved: true,
+            typeR: 2,
+            typeC: 2,
             question: 'BOX07',
             answer: '1993',
             $box: this._$header.find("#box7"),
             pW: 800,
             pH: 530,
-            ppX: 49,
-            ppY: 32,
-            pX: [[0, 0, -1, 0],
-            [0, 0, 0, 0],
-            [0, -1, 0, -1],
-            [0, -1, 0, -1],
-            ],
-            pY: [[0, 0, 0, 0],
-            [-1, 0, 0, 0],
-            [0, 0, -1, -1],
-            [-1, 0, 0, 0],
-            ]
-
+            ppX: 98,
+            ppY: 65,
+            pX:
+                [[0, -1, 0, 0],
+                [0, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [-1, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[0, -25, 0, 0],
+                [-25, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 8,
-            solved: false,
-            typeR: 4,
-            typeC: 4,
+            solved: true,
+            typeR: 2,
+            typeC: 3,
             question: 'BOX08',
             answer: 'zaterdag 21 maart',
             $box: this._$header.find("#box8"),
             pW: 800,
             pH: 600,
-            ppX: 49,
-            ppY: 36,
-            pX: [[0, -1, 0, 0],
-            [0, 0, 0, -1],
-            [0, 0, 0, 0],
-            [0, 0, -1, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [0, 0, -1, -1],
-            [-1, 0, -1, 0],
-            [-1, 0, -1, -1],
-            ]
+            ppX: 64,
+            ppY: 74,
+            pX:
+                [[0, -1, 0, 0],
+                [0, -1, -1, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [0, -1, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[-29, 0, -29, 0],
+                [0, -28, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 9,
-            solved: false,
+            solved: true,
             typeR: 4,
             typeC: 4,
             question: 'BOX09',
@@ -282,20 +374,31 @@ export class Puzzel {
             pH: 530,
             ppX: 49,
             ppY: 32,
-            pX: [[0, -1, -1, 0],
-            [0, 0, -1, 0],
-            [0, 0, -1, -1],
-            [0, 0, 0, -1],
-            ],
-            pY: [[0, 0, 0, 0],
-            [0, -1, -1, -1],
-            [0, -1, 0, -1],
-            [-1, -1, -1, -1],
-            ]
+            pX:
+                [[0, -1, -1, 0],
+                [0, 0, -1, 0],
+                [0, 0, -1, -1],
+                [0, 0, 0, -1],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [0, -1, -1, -1],
+                [0, -1, 0, -1],
+                [-1, -1, -1, -1],
+                ],
+            pYS:
+                [[-13, 0, 0, 0],
+                [-13, -13, -26, -13],
+                [0, -13, 0, -13],
+                [-13, -13, -13, -13],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
         this._qArr.push({
             photoNbr: 10,
-            solved: false,
+            solved: true,
             typeR: 3,
             typeC: 3,
             question: 'BOX10',
@@ -305,16 +408,27 @@ export class Puzzel {
             pH: 533,
             ppX: 64,
             ppY: 42,
-            pX: [[0, 0, 0, 0],
-            [0, -1, -1, 0],
-            [0, 0, -1, 0],
-            [0, 0, 0, 0],
-            ],
-            pY: [[0, 0, 0, 0],
-            [0, -1, 0, 0],
-            [0, 0, -1, 0],
-            [0, 0, 0, 0],
-            ]
+            pX:
+                [[0, 0, 0, 0],
+                [0, -1, -1, 0],
+                [0, 0, -1, 0],
+                [0, 0, 0, 0],
+                ],
+            pY:
+                [[0, 0, 0, 0],
+                [0, -1, 0, 0],
+                [0, 0, -1, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS:
+                [[-16, 0, -16, 0],
+                [-16, -33, 0, 0],
+                [0, 0, -16, 0],
+                [0, 0, 0, 0],
+                ],
+            pYS25: 1.0,
+            pYS50: 0.66,
+            pYS75: 0.35
         });
 
         this._$input = $('#inputAnswer');
@@ -408,9 +522,6 @@ export class Puzzel {
         // btn vorige
         $('#btnVorige').click((e) => {
 
-            this.sizePuzzel(100);
-            this._scale = 1.0;
-
             this._setting.questionPrev = this._setting.questionActive;
             this._setting.questionActive--;
             if (this._setting.questionActive < this._setting.firstQuestion)
@@ -424,9 +535,6 @@ export class Puzzel {
 
         // btn volgende
         $('#btnVolgende').click((e) => {
-
-            this.sizePuzzel(100);
-            this._scale = 1.0;
 
             if (this.checkAnswer()) {
                 this._setting.questionPrev = this._setting.questionActive;
@@ -455,9 +563,6 @@ export class Puzzel {
                 if (this._pressed) {
                     this._$div1.removeClass('alert-danger');
 
-                    this.sizePuzzel(100);
-                    this._scale = 1.0;
-
                     this.fixPuzzel();
                 }
 
@@ -470,9 +575,6 @@ export class Puzzel {
 
         $('form').submit((e) => {
             e.stopImmediatePropagation();
-
-            this.sizePuzzel(100);
-            this._scale = 1.0;
 
             if (this.checkAnswer()) {
                 this._setting.questionPrev = this._setting.questionActive;
@@ -516,27 +618,27 @@ export class Puzzel {
 
         // btn 25%
         $('#btn25').click((e) => {
-
-            this.sizePuzzel(25);
             this._scale = 0.25;
+            this.sizePuzzel(25);
+            this.showButtonSelect(25);
         })
         // btn 50%
         $('#btn50').click((e) => {
-            this.sizePuzzel(50);
             this._scale = 0.50;
-
+            this.sizePuzzel(50);
+            this.showButtonSelect(50);
         })
         // btn 75%
         $('#btn75').click((e) => {
-            this.sizePuzzel(75);
             this._scale = 0.75;
-
+            this.sizePuzzel(75);
+            this.showButtonSelect(75);
         })
         // btn 100%
         $('#btn100').click((e) => {
-            this.sizePuzzel(100);
             this._scale = 1.0;
-
+            this.sizePuzzel(100);
+            this.showButtonSelect(100);
         })
 
     }
@@ -624,9 +726,8 @@ export class Puzzel {
         this.ShowPhoto();
         // shuffle photo
         this.ShufflePhoto();
-
-
-
+        // size photo
+        this.sizePuzzel(this._scale * 100);
 
     }
 
@@ -693,9 +794,10 @@ export class Puzzel {
 
         let w = this._qArr[this._setting.questionActive].pW * this._scale;
         let h = this._qArr[this._setting.questionActive].pH * this._scale;
+        console.log('scale > ' + this._scale);
         let hCor = this._qArr[this._setting.questionActive].pH - h;
-        let ppX = this._qArr[this._setting.questionActive].ppX; // * this._scale;
-        let ppY = this._qArr[this._setting.questionActive].ppY; // * this._scale;
+        let ppX = this._qArr[this._setting.questionActive].ppX * this._scale;
+        let ppY = this._qArr[this._setting.questionActive].ppY * this._scale;
 
         let wOffset = Math.floor(w / tCol) + 1;
         let hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
@@ -703,6 +805,8 @@ export class Puzzel {
         let y = this._$puzzleSpace.position().top;
         let xPos, yPos;
         let xPos1, yPos1;
+
+
 
         let count = tRow * tCol;
         let row: number = 0;
@@ -740,8 +844,22 @@ export class Puzzel {
 
             if (this._qArr[this._setting.questionActive].pY[row][col] > 0)
                 yPos1 = yPos + ppY;
-            if (this._qArr[this._setting.questionActive].pY[row][col] < 0)
+            if (this._qArr[this._setting.questionActive].pY[row][col] < 0) {
                 yPos1 = yPos - ppY;
+            }
+
+            // extra correction zooming
+            switch (this._scale) {
+                case 0.75:
+                    yPos1 = yPos1 + (this._qArr[this._setting.questionActive].pYS[row][col] * this._qArr[this._setting.questionActive].pYS75);
+                    break;
+                case 0.5:
+                    yPos1 = yPos1 + (this._qArr[this._setting.questionActive].pYS[row][col] * this._qArr[this._setting.questionActive].pYS50);
+                    break;
+                case 0.25:
+                    yPos1 = yPos1 + (this._qArr[this._setting.questionActive].pYS[row][col] * this._qArr[this._setting.questionActive].pYS25);
+                    break;
+            }
 
 
             this._$puzzel[i]
@@ -799,6 +917,36 @@ export class Puzzel {
 
 
 
+    }
+
+    private showButtonSelect(scale: number) {
+        let b25 = $('#btn25');
+        let b50 = $('#btn50');
+        let b75 = $('#btn75');
+        let b100 = $('#btn100');
+
+        b25.removeClass('btn-success');
+        b50.removeClass('btn-success');
+        b75.removeClass('btn-success');
+        b100.removeClass('btn-success');
+
+        switch (scale) {
+
+            case 25:
+                b25.addClass('btn-success');
+                break;
+            case 50:
+                b50.addClass('btn-success');
+                break;
+            case 75:
+                b75.addClass('btn-success');
+                break;
+            case 100:
+                b100.addClass('btn-success');
+                break;
+
+            default:
+        }
     }
 
 }
