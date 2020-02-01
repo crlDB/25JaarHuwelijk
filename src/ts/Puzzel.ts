@@ -48,7 +48,7 @@ export class Puzzel {
     private _$input: JQuery<HTMLElement>;
     private _$puzzel: JQuery<HTMLElement>[] = [];
 
-    private _setting: ISetting = { questionActive: 10, questionPrev: 10, firstQuestion: 1, lastQuestion: 10 };
+    private _setting: ISetting = { questionActive: 1, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
     private _qArr: IQuestion[] = [];
     private db: DBox;
     private _$puzzleSpace: JQuery<HTMLElement>;
@@ -89,7 +89,7 @@ export class Puzzel {
         this._qArr.push({ photoNbr: 0, question: '', answer: '' });
         this._qArr.push({
             photoNbr: 1,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 2,
             question: 'BOX01',
@@ -124,7 +124,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 2,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 3,
             question: 'BOX02',
@@ -158,7 +158,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 3,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX03',
@@ -192,7 +192,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 4,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX04',
@@ -227,7 +227,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 5,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX05',
@@ -262,7 +262,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 6,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 2,
             question: 'BOX06',
@@ -296,7 +296,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 7,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 2,
             question: 'BOX07',
@@ -330,7 +330,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 8,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 3,
             question: 'BOX08',
@@ -364,7 +364,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 9,
-            solved: true,
+            solved: false,
             typeR: 4,
             typeC: 4,
             question: 'BOX09',
@@ -398,7 +398,7 @@ export class Puzzel {
         });
         this._qArr.push({
             photoNbr: 10,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX10',
@@ -449,9 +449,9 @@ export class Puzzel {
                 Hiervoor willen wij jullie dan ook <span id="box4" class="badge badge-warning">?</span> op een 
                 <span id="box5" class="badge badge-warning">?</span> in het restaurant 
                 waar we onze  <span id="box6" class="badge badge-warning">?</span> gevierd hebben in <span id="box7" class="badge badge-warning">?</span>.
-                Wanneer: <span id="box8" class="badge badge-warning">?</span> om 19u30.
-                Waar: <span id="box9" class="badge badge-warning">?</span>, Broekstraat 109 te Waregem.
-                Graag een seintje voor <span id="box10" class="badge badge-warning">?</span> 2020.
+                </br>Wanneer: <span id="box8" class="badge badge-warning">?</span> om 19u30.
+                </br>Waar: <span id="box9" class="badge badge-warning">?</span>, Broekstraat 109 te Waregem.
+                </br>Graag een seintje voor <span id="box10" class="badge badge-warning">?</span> 2020.
                 </h3>
                 </div>
 
@@ -557,7 +557,7 @@ export class Puzzel {
             this._pressed = true;
             this._$div1.addClass('alert-danger');
 
-            this.fixPuzzel();
+            //this.fixPuzzel();
 
             setTimeout(() => {
                 if (this._pressed) {
@@ -794,14 +794,13 @@ export class Puzzel {
 
         let w = this._qArr[this._setting.questionActive].pW * this._scale;
         let h = this._qArr[this._setting.questionActive].pH * this._scale;
-        console.log('scale > ' + this._scale);
-        let hCor = this._qArr[this._setting.questionActive].pH - h;
+        //console.log('scale > ' + this._scale);
         let ppX = this._qArr[this._setting.questionActive].ppX * this._scale;
         let ppY = this._qArr[this._setting.questionActive].ppY * this._scale;
 
         let wOffset = Math.floor(w / tCol) + 1;
         let hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
-        let x = ($(document).width() / 2) - (w / 2);
+        let x = ($(document).innerWidth() / 2) - (w / 2);
         let y = this._$puzzleSpace.position().top;
         let xPos, yPos;
         let xPos1, yPos1;

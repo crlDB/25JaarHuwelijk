@@ -7,7 +7,7 @@ var Puzzel = /** @class */ (function () {
     //
     function Puzzel() {
         this._$puzzel = [];
-        this._setting = { questionActive: 10, questionPrev: 10, firstQuestion: 1, lastQuestion: 10 };
+        this._setting = { questionActive: 1, questionPrev: 1, firstQuestion: 1, lastQuestion: 10 };
         this._qArr = [];
         this._scale = 1.0;
         // headertext
@@ -29,7 +29,7 @@ var Puzzel = /** @class */ (function () {
         this._qArr.push({ photoNbr: 0, question: '', answer: '' });
         this._qArr.push({
             photoNbr: 1,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 2,
             question: 'BOX01',
@@ -60,7 +60,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 2,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 3,
             question: 'BOX02',
@@ -91,7 +91,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 3,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX03',
@@ -122,7 +122,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 4,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX04',
@@ -153,7 +153,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 5,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX05',
@@ -184,7 +184,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 6,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 2,
             question: 'BOX06',
@@ -215,7 +215,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 7,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 2,
             question: 'BOX07',
@@ -246,7 +246,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 8,
-            solved: true,
+            solved: false,
             typeR: 2,
             typeC: 3,
             question: 'BOX08',
@@ -277,7 +277,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 9,
-            solved: true,
+            solved: false,
             typeR: 4,
             typeC: 4,
             question: 'BOX09',
@@ -308,7 +308,7 @@ var Puzzel = /** @class */ (function () {
         });
         this._qArr.push({
             photoNbr: 10,
-            solved: true,
+            solved: false,
             typeR: 3,
             typeC: 3,
             question: 'BOX10',
@@ -342,7 +342,7 @@ var Puzzel = /** @class */ (function () {
     Puzzel.prototype.createHeaderText = function () {
         // create header
         this._$header
-            = $("\n                <div class=\"container\">\n                <div class=\"row\" style=\"text-align:center; margin-top:35px;\">\n              \n                <div class=\"col-12\">\n                <h3>Op <span id=\"box1\" class=\"badge badge-warning\">?</span> 2020 zijn wij <span id=\"box2\" class=\"badge badge-warning\">?</span>!\n                Omdat we nog steeds heel erg <span id=\"box3\" class=\"badge badge-warning\">?</span> met elkaar,\n                zouden we dit graag samen met onze familie vieren.\n                Hiervoor willen wij jullie dan ook <span id=\"box4\" class=\"badge badge-warning\">?</span> op een \n                <span id=\"box5\" class=\"badge badge-warning\">?</span> in het restaurant \n                waar we onze  <span id=\"box6\" class=\"badge badge-warning\">?</span> gevierd hebben in <span id=\"box7\" class=\"badge badge-warning\">?</span>.\n                Wanneer: <span id=\"box8\" class=\"badge badge-warning\">?</span> om 19u30.\n                Waar: <span id=\"box9\" class=\"badge badge-warning\">?</span>, Broekstraat 109 te Waregem.\n                Graag een seintje voor <span id=\"box10\" class=\"badge badge-warning\">?</span> 2020.\n                </h3>\n                </div>\n\n                </div>\n                </div>");
+            = $("\n                <div class=\"container\">\n                <div class=\"row\" style=\"text-align:center; margin-top:35px;\">\n              \n                <div class=\"col-12\">\n                <h3>Op <span id=\"box1\" class=\"badge badge-warning\">?</span> 2020 zijn wij <span id=\"box2\" class=\"badge badge-warning\">?</span>!\n                Omdat we nog steeds heel erg <span id=\"box3\" class=\"badge badge-warning\">?</span> met elkaar,\n                zouden we dit graag samen met onze familie vieren.\n                Hiervoor willen wij jullie dan ook <span id=\"box4\" class=\"badge badge-warning\">?</span> op een \n                <span id=\"box5\" class=\"badge badge-warning\">?</span> in het restaurant \n                waar we onze  <span id=\"box6\" class=\"badge badge-warning\">?</span> gevierd hebben in <span id=\"box7\" class=\"badge badge-warning\">?</span>.\n                </br>Wanneer: <span id=\"box8\" class=\"badge badge-warning\">?</span> om 19u30.\n                </br>Waar: <span id=\"box9\" class=\"badge badge-warning\">?</span>, Broekstraat 109 te Waregem.\n                </br>Graag een seintje voor <span id=\"box10\" class=\"badge badge-warning\">?</span> 2020.\n                </h3>\n                </div>\n\n                </div>\n                </div>");
         //$('<img src="./src/img/faces/jenna2.png" class="img-fluid" style="">'));
         $('body').append(this._$header);
         //$('body').append(
@@ -398,7 +398,7 @@ var Puzzel = /** @class */ (function () {
         $('#btnInfo').on('mousedown touchstart', function (e) {
             _this._pressed = true;
             _this._$div1.addClass('alert-danger');
-            _this.fixPuzzel();
+            //this.fixPuzzel();
             setTimeout(function () {
                 if (_this._pressed) {
                     _this._$div1.removeClass('alert-danger');
@@ -570,13 +570,12 @@ var Puzzel = /** @class */ (function () {
         var tCol = this._qArr[this._setting.questionActive].typeC;
         var w = this._qArr[this._setting.questionActive].pW * this._scale;
         var h = this._qArr[this._setting.questionActive].pH * this._scale;
-        console.log('scale > ' + this._scale);
-        var hCor = this._qArr[this._setting.questionActive].pH - h;
+        //console.log('scale > ' + this._scale);
         var ppX = this._qArr[this._setting.questionActive].ppX * this._scale;
         var ppY = this._qArr[this._setting.questionActive].ppY * this._scale;
         var wOffset = Math.floor(w / tCol) + 1;
         var hOffset = Math.floor(h / tRow) + 1; //hOffset += 0.5;
-        var x = ($(document).width() / 2) - (w / 2);
+        var x = ($(document).innerWidth() / 2) - (w / 2);
         var y = this._$puzzleSpace.position().top;
         var xPos, yPos;
         var xPos1, yPos1;
